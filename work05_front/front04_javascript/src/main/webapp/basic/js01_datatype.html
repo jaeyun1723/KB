@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바 스크립트의 데이터 타입 정리</title>
+
+<script>
+	/* 	변수 앞에 쓰는 키워드 : var
+		variable 이라는 변수 선언
+		변수의 타입을 변수명 앞에 지정X */
+	var variable;
+	/* 	동적 값 할당(동적 type 지정)
+		1. 선언 :  stringVar 이름을 갖는 공간이 하나 만들어짐
+	   	2. 초기화 : 공간에 값이 할당됨. "string" 이라는 값
+	   	3. type 지정 : 그 결과로 stringVar 변수는 string type으로 결정됨 */
+	var stringVar = "string";
+	var numVar = 277;
+	var booleanvar = true; // 소문자 t
+	var functionvar = function(){}; //함수명 없음 : 익명 함수
+	var objectvar = {}; //객체 => {} : json형태
+	
+	/* alert(stringVar);
+	alert(numVar);
+	alert(booleanvar);
+	alert(functionvar);
+	alert(objectvar); */
+	
+	//typeof 는 변수 않에 들어있는 값의 타입을 리턴
+	alert(typeof(variable));
+	alert(typeof(stringVar));
+	alert(typeof(numVar));
+	alert(typeof(booleanvar));
+	alert(typeof(functionvar));
+	alert(typeof(objectvar));
+	
+</script>
+<!-- 
+자바 스크립트에서 제공하는 기본 데이터 타입들
+number 
+string
+boolean
+함수형
+객체형
+undefined
+ -->
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+package com.jdbc.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import oracle.security.o3logon.a;
+
+public class DBConnectTest2 {
+
+	public static void main(String[] args) {
+		try {
+		// 1. 드라이버 로딩
+			Class.forName("oracle.jdbc.driver.OracleDriver");// FQCN
+//			2. 디비연결..Connection반환
+			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", 
+					"kb_db", "1234");
+//			3. PreparedStatement 객체 생성..args 이때 인자값으로 쿼리문 입력(delete..333삭제)
+//			String query = "DELETE FROM CUSTOM WHERE id = ?";
+//			String query = "UPDATE CUSTOM SET address=? WHERE id=111 ";
+//			PreparedStatement ps=conn.prepareStatement(query);
+//			ps.setString(1, "뉴욕");
+			
+			String query = "SELECT id, name, address FROM custom";
+			PreparedStatement ps=conn.prepareStatement(query);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				System.out.println(rs.getInt(1)+"\t"+rs.getString(2)
+				+"\t"+rs.getString(3));
+			}
+//			ps.setInt(1, 333);
+//			4. 쿼리문 실행
+			System.out.println(ps.executeUpdate()+"update OK");
+			
+		} catch (ClassNotFoundException e) {
+			System.out.println("1. Driver Loading...Fail...");
+		} catch (SQLException e) {
+			System.out.println("2. DB Connect...Fail...");
+		}
+
+	}//
+}//

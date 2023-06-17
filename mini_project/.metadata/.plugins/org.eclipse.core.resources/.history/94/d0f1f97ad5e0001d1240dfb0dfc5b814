@@ -1,0 +1,34 @@
+package com.air.dto;
+
+public class RemainingSeat {
+	private String airId;
+	private int remainSeat;
+	
+	public RemainingSeat(String airId, int remainSeat) {
+		super();
+		this.airId = airId;
+		this.remainSeat = remainSeat;
+	}
+
+	public String getAirId() {
+		return airId;
+	}
+
+	public void setAirId(String airId) {
+		this.airId = airId;
+	}
+
+	public int getRemainSeat() {
+		return remainSeat;
+	}
+
+	public void setRemainSeat(int remainSeat) {
+		this.remainSeat = remainSeat;
+	}
+
+	@Override
+	public String toString() {
+		return "RemainingSeat [airId=" + airId + ", remainSeat=" + remainSeat + "]";
+	}
+	
+}

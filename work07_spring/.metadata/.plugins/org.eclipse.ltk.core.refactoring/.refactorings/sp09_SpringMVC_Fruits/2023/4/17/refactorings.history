@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;beans&apos; to &apos;sp10_SpringMVC_product/src/main/resources&apos;&#x0D;&#x0A;- Original project: &apos;sp09_SpringMVC_Fruits&apos;&#x0D;&#x0A;- Destination element: &apos;sp10_SpringMVC_product/src/main/resources&apos;&#x0D;&#x0A;- Original element: &apos;sp09_SpringMVC_Fruits/src/main/resources/beans&apos;" description="Copy package" destination="=sp10_SpringMVC_product/src\/main\/resources" element1="/src\/main\/resources&lt;beans" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1682658847118" version="1.0"/>
+</session>

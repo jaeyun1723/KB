@@ -1,0 +1,15 @@
+package com.edu.exception.test3;
+
+/*
+ * 사용자정의 Exception
+ * 1. 내가 직접 Exception 클래스를 만들어서 사용...
+ * 2. 특정한 조건일때 내가 고의적으로 예외를 발생시키는 경우...
+ */
+public class UserExceptionTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

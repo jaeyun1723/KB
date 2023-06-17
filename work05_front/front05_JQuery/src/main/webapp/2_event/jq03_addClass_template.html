@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>css() 사용남발로 JQuery와  css 분리가 제대로 안됨 :: addClass()</title>
+<style>
+	.colorP{color: purple}
+	.colorT{color: tomato}
+	.theme{background: black; color: red}
+	.borderG{ border:1px solid green}
+	.borderB{ border:1px solid blue}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function(){ 
+		//style에 class 속성 만들어 놓고 추가
+		$('h2, p').addClass('colorP');
+		
+		//1. h2 태그의 직계 자식 , 글자색 tomato
+		$('h2>*').addClass('colorT');
+
+		//2. p 태그 두 번째 선택, 경계선 1px solid green
+		$('p:eq(1)').addClass('borderG');
+		
+		//3.  p 태그 마지막 선택, 경계선 1px solid blue
+		$('p:last').addClass('borderB');
+
+		//4. p태그 클래스 속성값이 theme인 선택자 선택, 글자색 red 배경색 black
+		$('p.theme').addClass('theme')
+		/* $('p.theme').css('color','red').css('background', 'black');
+		$('p.theme').css({"color" : "red" , 
+						"background": "black"}); */
+		
+	});
+</script>
+</head>
+<body>
+	<h2 id="header">	
+		<span>This is a heading</span>
+	</h2>
+	
+	<p>This is a paragraph.</p>
+	<p class="content">This is another paragraph1.</p>
+	<p class="content theme">This is another paragraph2.</p>
+	
+	<button>Click me to hide paragraphs</button>
+</body>
+</html>

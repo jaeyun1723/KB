@@ -1,0 +1,9 @@
+package com.air.dto;
+
+public class RemainingSeat {
+	private String airId;
+	private String seatId;
+	private String grade;
+	private int remainSeat;
+	
+}

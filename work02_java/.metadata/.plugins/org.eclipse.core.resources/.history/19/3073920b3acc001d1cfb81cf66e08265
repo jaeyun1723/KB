@@ -1,0 +1,10 @@
+package com.ed.access.test;
+
+public class AccessAppTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

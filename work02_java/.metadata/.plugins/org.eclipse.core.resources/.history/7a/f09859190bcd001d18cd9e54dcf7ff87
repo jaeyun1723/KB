@@ -1,0 +1,20 @@
+package com.edu.test;
+
+/*
+ * final
+ * 
+ * <<access modifier>>
+ * 		public / protected / private
+ * 
+ * <<usage modifier>>
+ * 		static / abstract / final
+ * 		ex) static final int SPEED;
+ * 			final static int SPEED;
+ */
+public class FinalExamTest2 {
+
+	public static void main(String[] args) {
+
+	}
+
+}

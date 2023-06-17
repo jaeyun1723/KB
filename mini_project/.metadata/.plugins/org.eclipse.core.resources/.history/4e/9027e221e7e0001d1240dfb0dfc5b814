@@ -1,0 +1,10 @@
+package com.air.dto;
+
+public class SeatReservation {	// res_seat
+	private int resId;	// res_id
+	private String airId;	// air_id
+	private String seatId;	// seat_id
+	
+	
+	
+}

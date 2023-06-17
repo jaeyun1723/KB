@@ -1,0 +1,59 @@
+
+--drop table res_seat;
+--drop table seat;
+--drop table reservation;
+--drop table airline;
+--drop table customer;
+--drop sequence seq_cust_id;
+--drop sequence seq_res_id;
+
+CREATE TABLE customer(
+cust_id NUMBER(20) PRIMARY KEY,
+cust_name VARCHAR2(50) NOT NULL,
+phone VARCHAR2(30) NOT NULL,
+birthdate DATE NOT NULL,
+email VARCHAR2(40) NOT NULL,
+point NUMBER(30,2));
+
+CREATE TABLE airline(
+air_id VARCHAR2(20) PRIMARY KEY,
+dpt_time DATE NOT NULL,
+arv_time DATE NOT NULL,
+depart VARCHAR2(20) NOT NULL,
+arrival VARCHAR2(20) NOT NULL,
+seats NUMBER(4) NOT NULL,
+tot_price NUMBER(10) NOT NULL);
+
+CREATE TABLE reservation(
+res_id NUMBER(20) PRIMARY KEY,
+cust_id NUMBER(20) NOT NULL,
+air_id VARCHAR2(20) NOT NULL,
+seat_grade VARCHAR2(20) NOT NULL,
+price NUMBER(10) NOT NULL,
+FOREIGN KEY (cust_id) REFERENCES customer ON DELETE CASCADE,
+FOREIGN KEY (air_id) REFERENCES airline ON DELETE CASCADE
+);
+
+CREATE TABLE seat(
+seat_id VARCHAR2(20) NOT NULL,
+air_id VARCHAR2(20) NOT NULL,
+seat_grade VARCHAR2(20) NOT NULL,
+seat_status VARCHAR2(20) NOT NULL,
+PRIMARY KEY (seat_id, air_id),
+FOREIGN KEY (air_id) REFERENCES airline ON DELETE CASCADE
+);
+
+CREATE TABLE res_seat(
+seat_id VARCHAR2(20) NOT NULL, 
+res_id NUMBER(20) NOT NULL,
+FOREIGN KEY (res_id) REFERENCES reservation ON DELETE CASCADE);
+
+
+
+CREATE SEQUENCE seq_cust_id
+INCREMENT BY 1
+START WITH 1;
+
+CREATE SEQUENCE seq_res_id
+INCREMENT BY 1
+START WITH 1;

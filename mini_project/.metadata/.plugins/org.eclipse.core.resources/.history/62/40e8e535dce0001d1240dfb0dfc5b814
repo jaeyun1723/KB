@@ -1,0 +1,105 @@
+package com.air.client;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.air.dao.impl.AirLineDAOImpl;
+import com.air.dao.impl.CustomerDAOImpl;
+import com.air.dao.impl.ReservationDAOImpl;
+import com.air.dto.AirLine;
+import com.air.dto.Customer;
+import com.air.dto.Reservation;
+import com.air.exception.RecordNotFoundException;
+
+public class CustomerDAOImplTest {
+
+	public static void main(String[] args) {
+		CustomerDAOImpl custDao = CustomerDAOImpl.getInstance();
+		AirLineDAOImpl dao = AirLineDAOImpl.getInstance();
+		ReservationDAOImpl reDao = ReservationDAOImpl.getInstance();
+		// 고객 추가
+//		try {
+//			custDao.insertCustomer(new Customer("김재윤", "010-1111-1111", "1997-04-05", "김재윤@gmail.com"));
+//			custDao.insertCustomer(new Customer("김연아", "010-2222-2222", "1999-05-21", "김연아@gmail.com"));
+//			custDao.insertCustomer(new Customer("문석진", "010-3333-3333", "1994-07-01", "문석진@gmail.com"));
+//			custDao.insertCustomer(new Customer("신혜영", "010-4444-4444", "1997-07-05", "신혜영@gmail.com"));
+//			custDao.insertCustomer(new Customer("임서영", "010-5555-5555", "2000-12-11", "임서영@gmail.com"));
+//			custDao.insertCustomer(new Customer("노승욱", "010-6666-6666", "1997-09-25", "노승욱@gmail.com"));
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//		}
+		
+		// 고객 삭제
+//		try {
+//			custDao.deleteCustomer(3);
+//		} catch (SQLException e) {
+//			System.out.println(e.getMessage());
+//		} catch (RecordNotFoundException e) {
+//			System.out.println(e.getMessage());
+//		}
+		
+		// 고객 수정
+//		try {
+//			custDao.updateCustomer(new Customer(5, "문석진", "010-9914-1242", "2000-03-03", "문석진@naver.com"));
+//		} catch (SQLException e) {
+//			System.out.println(e.getMessage());
+//		} catch (RecordNotFoundException e) {
+//			System.out.println(e.getMessage());
+//		}
+		
+//	     고객 개인정보 조회
+//      try {
+//          Customer c = custDao.getCustomer("김연아", "010-2222-2222");
+//          System.out.println(c);
+//      } catch (Exception e) {
+//    		System.out.println(e.getMessage());
+//      }
+
+  // 고객 개인예약정보 조회
+//      try {
+//          ArrayList<Reservation> resList = custDao.getAllReserve();
+//          for (Reservation rv : resList) System.out.println(rv);
+//      } catch (Exception e) {
+//    	  System.out.println(e.getMessage());
+//      }
+		
+		// 지정한 등급 좌석, 출발지 도착지 기준 항공편 검색
+//		try {
+//			ArrayList<AirLine> list = dao.searchAirLine("김포", "제주", 1.5);
+//			for(AirLine m : list) System.out.println(m);
+//		}catch(Exception e) {
+//			System.out.println(e.getMessage());
+//		}
+		
+		// 지정한 등급 좌석,지정한 시간 이상의 시간대 항공편 검색
+//		try {
+//			ArrayList<AirLine> list = dao.searchAirLine("2023-5-6 07:15:00", 1.5);
+//			for(AirLine m : list) System.out.println(m);
+//		}catch(Exception e) {
+//			
+//		}
+		
+		// 지정한 등급 좌석, 지정한 금액 이하의 항공편 검색
+		try {
+			ArrayList<AirLine> list = dao.searchAirLine(1.5, 95000);
+			for(AirLine m : list) System.out.println(m);
+		}catch(Exception e) {
+			
+		}
+		
+		
+		// VIP인가? -> 혜택
+
+		
+//		// 항공편 예약
+//		try {
+//			reDao.reserveAirLine(new AirLine("kbairbo707","2023-5-20 21:10:00","2023-5-20 22:30:00","부산","김포",200,16000000),
+//					new Customer(12, "James", "010-9914-1242", "2000-03-03", "james@naver.com",0),
+//					"일반석", "H10");
+//		}catch(Exception e) {
+//			System.out.println(e.getMessage());
+//		}
+//		
+	}
+
+}

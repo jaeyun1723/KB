@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	static boolean[] primeNum;
+	static int max;
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		int T = Integer.parseInt(st.nextToken());
+		primeNum = new boolean[1_000_001];
+
+		isPrime();
+		for (int i = 0; i < T; i++) {
+			st = new StringTokenizer(br.readLine());
+			int num = Integer.parseInt(st.nextToken());
+			int cnt = 0;
+			System.out.println(num);
+			for (int j = 2; j <= num / 2; j++) {
+				if (!primeNum[j] && !primeNum[num - j])
+					cnt++;
+			}
+			System.out.println(cnt);
+		}
+//		1 2 3 4 5 6 7 8 9 10 11 12
+//		0 0 0 1 1 1  1 1 1  2  
+		// 홀+홀=짝 짝+짝=짝(4는 예외)
+
+	}//
+
+	static void isPrime() {
+		for (int i = 2; i * i <= 1_000_000; i++)
+			if (!primeNum[i]) {
+				for (int j = i * 2; j <= 1_000_000; j++)
+					primeNum[j] = true;
+			}
+	}
+	
+}//

@@ -1,0 +1,15 @@
+package com.edu.exception.test;
+
+class FileReading{
+	public void readFile(String fileName) {
+		
+	}
+}
+public class CompileExceptionTest2 {
+
+	public static void main(String[] args) {
+		FileReading fr=new FileReading();
+		fr.readFile("C:\\KB\\workshop_homwork\\java_r_01\\java_r1_Workshop.pdf");
+	}
+
+}

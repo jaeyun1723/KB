@@ -1,0 +1,27 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	static boolean[] primeNum;
+	static int max;
+
+	public static void main(String[] args) throws IOException {
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		String id="abCDEfghIJKl";
+		id.toLowerCase();
+		int[] arr=new int[8];
+		int k=5;
+		int a=k++;
+		System.out.println(k);
+
+	}//
+
+
+
+}//

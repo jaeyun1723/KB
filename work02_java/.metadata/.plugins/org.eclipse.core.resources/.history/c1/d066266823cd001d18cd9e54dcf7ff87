@@ -1,0 +1,54 @@
+package com.edu.service.impl;
+
+import java.util.ArrayList;
+
+import com.edu.service.EmployeeListService;
+import com.edu.vo.Employee;
+
+public class EmployeeListServiceImpl implements EmployeeListService {
+
+	// 필드 추가
+	private ArrayList<Employee> list; 
+	// 싱글톤
+	private static EmployeeListServiceImpl service = new EmployeeListServiceImpl();
+	private EmployeeListServiceImpl() {
+		list = new ArrayList<>();
+	}
+	public static EmployeeListServiceImpl getInstance() {
+		return service;
+	}
+	
+	@Override
+	public void addEmployee(Employee e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteEmployee(String empId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateEmployee(Employee e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Employee> findEmployees(String addr) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void findEmployees() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+}

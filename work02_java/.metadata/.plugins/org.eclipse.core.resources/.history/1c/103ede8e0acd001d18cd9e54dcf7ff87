@@ -1,0 +1,14 @@
+package com.edu.test;
+
+/*
+ * final
+ * 
+ * access modifier
+ */
+public class FinalExamTest2 {
+
+	public static void main(String[] args) {
+
+	}
+
+}

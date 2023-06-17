@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 1. sql 구문의 재사용 :: sql, include -->
+<mapper namespace="UserMapper10">
+	<resultMap type="user" id="userSelectMap">
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="password" column="password" />
+		<result property="age" column="age" />
+		<result property="grade" column="grade" />
+		<result property="reg_date" column="regDate" />
+	</resultMap>
+
+	<!-- sql 구문의 모듈화 -->
+	<sql id="select-users">
+		SELECT
+		user_id, user_name, password, age, grade, reg_date
+		FROM users
+	</sql>
+	<sql id="orderby-userid-desc">
+		ORDER BY user_id DESC
+	</sql>
+	
+	<!-- 추가 -->
+	 <insert id="addUser" parameterType="user">
+        INSERT
+        INTO users(user_id, user_name, password, age, grade, reg_date)
+        VALUES (
+            #{userId}, #{userName}, #{password}, #{age}, #{grade}, #{regDate}
+        )
+    </insert>
+
+    <update id="updateUser" parameterType="user">
+        UPDATE users
+        SET user_name = #{userName}
+        WHERE user_id = #{userId}
+    </update>
+
+    <delete id="removeUser">
+        DELETE FROM users WHERE user_id = #{id}
+    </delete>
+	
+	<!-- 정적인 쿼리문 :: where절 조건이 달라질 때 마다 계속적으로 쿼리문이 생성됨 -->
+	<select id="getUser" parameterType="user"
+		resultMap="userSelectMap">
+		<include refid="select-users"/>
+		WHERE password=#{password}
+	</select>
+
+	<!-- 동적인 쿼리문 :: where절 조건이 달라져도 하나의 쿼리문으로 다 실행 userName이 홍길동이고 age가 30살인 
+		사람을 검색하는 쿼리... where user_name='aaa' and age='30' where user_name='aaa' where 
+		age='30' where -->
+	<select id="getUserList" parameterType="user"
+		resultMap="userSelectMap">
+		<include refid="select-users"/>
+		<where>
+			<if test="userName != null">
+				user_name LIKE #{userName}
+			</if>
+			<if test="age != null">
+				OR age LIKE #{age}
+			</if>
+		</where>
+		<include refid="orderby-userid-desc" />
+
+	</select>
+
+
+
+</mapper>

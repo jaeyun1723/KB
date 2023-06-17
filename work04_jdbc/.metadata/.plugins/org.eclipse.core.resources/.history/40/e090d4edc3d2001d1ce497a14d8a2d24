@@ -1,0 +1,35 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		int[] elements = { 7, 9, 1, 1, 4 };
+		int answer = 0;
+		int[] arr = new int[elements.length * 2];
+		Set<Integer> set = new HashSet<>();
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = elements[i];
+			System.out.println(arr[i]);
+			arr[i + elements.length] = elements[i];
+			set.add(arr[i]);
+			System.out.println("ASd");
+		}
+
+		for (int start = 0; start < elements.length; start++) {
+			int value = 0;
+			for (int j = start; j < start + elements.length; j++) {
+				value += arr[j];
+				set.add(value);
+			}
+		}
+		answer = set.size();
+
+	}//
+
+}//

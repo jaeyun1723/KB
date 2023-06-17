@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/* JS에서 전역과 local 의 구분이 명확하지 않아서 분명히 해야함!! */
+	var myName= "Peter"; // 전역변수
+	function showInfo() {
+		myAge = 22; // 전역변수
+		/* console.info(myAge); // 22 가 출력됨 */
+		// es6, ECMA 2015 (둘이 같은 말) -> let 이라는 문법이 새로 지정됨
+		// let : local 변수 앞에 무조건 붙힘.
+		let age = 33;
+		console.info(age);
+		var yourAge = 44; // 전역
+	}
+	showInfo();
+	console.info(myAge); // 22가 출력됨 -> myAge : 전역임
+	console.info(myName); // Peter 가 출력됨
+	console.info(age); // error : Uncaught ReferenceError: age is not defined 
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

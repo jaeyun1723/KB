@@ -1,0 +1,18 @@
+package jdbc.client;
+
+import jdbc.dao.MemberDAO;
+import jdbc.dao.impl.MemberDAOImpl;
+
+public class MemberDAOImplTest {
+
+	public static void main(String[] args) {
+		MemberDAOImpl dao = MemberDAOImpl.getInstance();
+		try {
+			dao.insertMember(new Member("김재윤","abc@a","010-3333-2555"));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}//
+
+}//

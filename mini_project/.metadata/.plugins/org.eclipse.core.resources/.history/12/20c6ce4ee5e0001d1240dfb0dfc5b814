@@ -1,0 +1,21 @@
+package com.air.dto;
+
+public class Reservation {
+	private int resId;
+	private int custId;
+	private String airId;
+	private int seats;
+	private int price;
+	
+	public Reservation(int resId, int custId, String airId, int seats, int price) {
+		super();
+		this.resId = resId;
+		this.custId = custId;
+		this.airId = airId;
+		this.seats = seats;
+		this.price = price;
+	}
+	
+	
+	
+}

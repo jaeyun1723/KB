@@ -1,0 +1,81 @@
+
+<!-- val() | html(), text()
+$.each(array, function(index, item){
+});
+
+return confirm("... 하시겠습니까?") : 확인 (true) | 취소 (false)
+
+
+click(), bind('click'), on('click')!!
+change(), 
+hover()
+
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(function() {
+	//1.옵션 생성 버튼 클릭시 .... 선택자/함수 연결
+	/* $('#addOptionBtn').on('click', function() {
+		//2. friends 들에 해당하는 배열이 생성 + 그 item 들이 select 태그의 자식 option 태그의 값으로
+		//option 태그의 value의 값으로 <option value='동은'>동은</option> 이런 식으로 추가
+		//$.each(array, function(index, item){ <option value='동은'>동은</option> })
+		var arr = ["동은", "연진", "사라", "명호"];
+		$.each(arr, function(index, item){
+			var option = "<option value=" + item + ">" + item +"</option>";
+			$('#friend').append(option);
+		});
+		//배열 한번만 돌아서 만들 수 있도록
+		$('#addOptionBtn').unbind();
+	});//on */
+	
+	$('#addOptionBtn').one('click', function() {
+		//2. friends 들에 해당하는 배열이 생성 + 그 item 들이 select 태그의 자식 option 태그의 값으로
+		//option 태그의 value의 값으로 <option value='동은'>동은</option> 이런 식으로 추가
+		//$.each(array, function(index, item){ <option value='동은'>동은</option> })
+		var arr = ["동은", "연진", "사라", "명호"];
+		$.each(arr, function(index, item){
+			var option = "<option value=" + item + ">" + item +"</option>";
+			$('#friend').append(option);
+		});
+	});//on
+	
+	//2. 옵션 삭제 버튼을 클릭하면 생성된 option 태그를 삭제 : remove()
+	$('#deleteOptionBtn').on('click', function() {
+		$('#friend>option').remove();
+	});//on
+	
+	
+	
+	
+});//ready
+</script>
+</head>
+<body>
+	<input type="button" value="옵션 생성" id="addOptionBtn">
+	<input type="button" value="옵션 삭제" id="deleteOptionBtn">
+	<select id="friend">	
+	</select>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

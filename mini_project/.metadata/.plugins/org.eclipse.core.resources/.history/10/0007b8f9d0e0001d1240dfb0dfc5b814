@@ -1,0 +1,36 @@
+package com.air.dto;
+
+public class SeatReservation {
+	private String seatId;
+	private int custId;
+	private int resId;
+	
+	public SeatReservation(String seatId, int resId) {
+		super();
+		this.seatId = seatId;
+		this.resId = resId;
+	}
+
+	public String getSeatId() {
+		return seatId;
+	}
+
+	public void setSeatId(String seatId) {
+		this.seatId = seatId;
+	}
+
+	public int getResId() {
+		return resId;
+	}
+
+	public void setResId(int resId) {
+		this.resId = resId;
+	}
+
+	@Override
+	public String toString() {
+		return "SeatReservation [seatId=" + seatId + ", resId=" + resId + "]";
+	}
+	
+	
+}

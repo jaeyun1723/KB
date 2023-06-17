@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function(){  
+		// body 의 모든 자식
+		$('body *').css('color', 'purple');
+		// body 의 모든 자식들에게 경계선
+		//$('body *').css('border', '2px solid red');
+		//body의 직계자식
+		$('body>*').css('border', '2px solid red');
+
+		
+	});
+</script>
+</head>
+<body>
+	<div>
+		<ul>
+			<li>Apple</li>
+			<li>Tomato</li>
+			<li>Banana</li>
+			<li>Peach</li>
+			<li>Graph</li>
+		</ul>
+	</div>
+</body>
+</html>
+
+
+
+
+

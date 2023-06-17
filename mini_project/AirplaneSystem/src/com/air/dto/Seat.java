@@ -1,0 +1,55 @@
+package com.air.dto;
+
+public class Seat {	// seat
+	private String seatId;	// seat_id
+	private String airId;	// air_id
+	private String grade;	// seat_grade
+	private String state;	// seat_status
+	
+	
+	public Seat(String seatId, String airId, String grade, String state) {
+		super();
+		this.seatId = seatId;
+		this.airId = airId;
+		this.grade = grade;
+		this.state = state;
+	}
+
+	public String getSeatId() {
+		return seatId;
+	}
+
+	public void setSeatId(String seatId) {
+		this.seatId = seatId;
+	}
+
+	public String getAirId() {
+		return airId;
+	}
+
+	public void setAirId(String airId) {
+		this.airId = airId;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Override
+	public String toString() {
+		return "Seat [seatId=" + seatId + ", airId=" + airId + ", grade=" + grade + ", state=" + state + "]";
+	}
+
+}

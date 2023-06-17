@@ -1,0 +1,30 @@
+package com.edu.test;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class HashSetTest2 {
+
+	public static void main(String[] args) {
+		Set<String> set = new HashSet<>();
+		set.add("F");
+		set.add("D");
+		set.add("A");
+		set.add("B");
+		set.add("A");
+		set.add("C");
+		// Set은 중복 허용x, 순서x
+		System.out.println(set);
+		System.out.println(set.toString());
+		System.out.println(set.size());
+
+		boolean flag = set.remove("B");
+		System.out.println("삭제가 진행되었나요?? " + flag);
+		System.out.println(set);
+		
+		set.clear();
+		System.out.println(set);
+		
+	}//
+
+}//

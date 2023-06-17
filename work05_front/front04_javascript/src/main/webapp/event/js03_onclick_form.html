@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function showName() {
+	/* 1. 닉네임 alert 
+		2. 닉네임 폼 초기화
+		3. 마우스 포커스 취미 폼으로
+	
+	*/
+	
+	let nickValue = document.loginFrm.nick.value;
+	alert(nickValue);
+	document.loginFrm.nick.value="";
+	document.loginFrm.hobby.focus();
+}
+
+function showHobby(){
+	let hobby  = document.getElementById("hobby").value;
+	alert(hobby);
+	document.loginFrm.hobby.value="";
+	document.loginFrm.nick.focus();
+	
+}
+</script>
+
+</head>
+<body>
+<form action="#" name="loginFrm">
+	<fieldset style="width : 400px; height : 100px">
+		닉네임 <input type="text" name="nick" id="nick">
+		<input type="button" value="닉네임보기" onclick="showName()">
+		
+		<br><br>
+		취미 <input type="text" name="hobby" id="hobby">
+		<input type="button" value="취미보기" onclick="showHobby()">
+		
+	</fieldset>
+
+
+</form>
+
+</body>
+</html>

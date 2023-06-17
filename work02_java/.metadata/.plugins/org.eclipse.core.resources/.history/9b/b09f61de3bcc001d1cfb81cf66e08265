@@ -1,0 +1,20 @@
+package com.ed.access.test;
+
+import com.edu.access.parent.Parent;
+
+class Child extends Parent {
+	// publicVar는 서로 다른 클래스, 서로 다른 패키지라도 접근 허용
+	public void test() {
+		System.out.println(publicVar);
+		System.out.println(protectedVar);
+	}
+}
+
+public class AccessAppTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

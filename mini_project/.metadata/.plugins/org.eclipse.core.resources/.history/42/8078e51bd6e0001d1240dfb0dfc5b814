@@ -1,0 +1,5 @@
+package com.air.dao.impl;
+
+public class RemainingSeatDAOImpl {
+
+}

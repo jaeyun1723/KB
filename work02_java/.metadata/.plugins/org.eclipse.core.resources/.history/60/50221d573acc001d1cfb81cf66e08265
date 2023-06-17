@@ -1,0 +1,17 @@
+package com.ed.access.test;
+
+class Parent{
+	
+}
+
+class Child{
+	
+}
+public class AccessAppTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

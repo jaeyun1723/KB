@@ -1,0 +1,24 @@
+package jdbc.client;
+
+import jdbc.dao.MemberDAO;
+import jdbc.dao.impl.MemberDAOImpl;
+import jdbc.dto.Member;
+
+public class MemberDAOImplTest {
+
+	public static void main(String[] args) {
+		MemberDAOImpl dao = MemberDAOImpl.getInstance();
+		try {
+//			dao.insertMember(new Member("김재윤","김재윤a","01033332555"));
+			dao.insertMember(new Member("문석진","문석진a","01055552555"));
+			dao.insertMember(new Member("이원근","이원근a","01077332555"));
+//			dao.insertMember(new Member("정승혜","정승혜a","01077332142"));
+//			dao.deleteMember(3);
+//			dao.updateMember(new Member("정승혜","정승혜b","01077332142"));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}//
+
+}//

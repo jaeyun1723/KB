@@ -1,0 +1,65 @@
+package com.air.dto;
+
+public class Reservation {	// reservation
+	private int resId;	// res_id
+	private int custId;	// cust_id
+	private String airId;	// air_id
+	private int seats;	// seats
+	private int price;	// price
+
+	public Reservation(int resId, int custId, String airId, int seats, int price) {
+		super();
+		this.resId = resId;
+		this.custId = custId;
+		this.airId = airId;
+		this.seats = seats;
+		this.price = price;
+	}
+
+	public int getResId() {
+		return resId;
+	}
+
+	public void setResId(int resId) {
+		this.resId = resId;
+	}
+
+	public int getCustId() {
+		return custId;
+	}
+
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+
+	public String getAirId() {
+		return airId;
+	}
+
+	public void setAirId(String airId) {
+		this.airId = airId;
+	}
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return "Reservation [resId=" + resId + ", custId=" + custId + ", airId=" + airId + ", seats=" + seats
+				+ ", price=" + price + "]";
+	}
+
+}

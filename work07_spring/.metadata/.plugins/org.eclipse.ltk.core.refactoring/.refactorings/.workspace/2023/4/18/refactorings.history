@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ws04_CafeMember&apos; to &apos;ws04_CafeMembers&apos;" description="Rename resource &apos;ws04_CafeMember&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/ws04_CafeMember" name="ws04_CafeMembers" stamp="1682856532744" updateReferences="true"/>
+</session>

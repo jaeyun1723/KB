@@ -1,0 +1,18 @@
+package com.ed.access.test;
+
+import com.edu.access.parent.Parent;
+
+class Child extends Parent {
+	public void test() {
+		System.out.println(publicVar);
+	}
+}
+
+public class AccessAppTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

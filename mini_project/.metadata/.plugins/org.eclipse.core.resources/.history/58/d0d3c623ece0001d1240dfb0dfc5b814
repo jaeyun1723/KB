@@ -1,0 +1,11 @@
+package com.air.exception;
+
+public class DuplicateAirLineException extends Exception  {
+	public DuplicateAirLineException() {
+		this("This is DuplicateAirLineException...");
+	}
+
+	public DuplicateAirLineException(String message) {
+		super(message);
+	}
+}

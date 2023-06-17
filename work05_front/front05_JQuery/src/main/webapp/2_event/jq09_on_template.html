@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div{ 
+		border-radius:10px; border:1px solid red;
+	}
+	#future{ border:1px solid green;}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function(){  
+		//1. 
+		$('div').click(function(){
+			$('#future').append('<h2 id=kblife>KBStar연수진행과정</h2>');
+		});
+		
+		//2. 미래에 존재하는 태그를 클릭하는 함수
+		/* $('h2').on('click', function(){
+		절대로 잘못된 코드	
+		}); */
+		
+		//선택자는 원래부터 있었던 것으로 해야함
+		//on 의 두번째 인자로 click 하는 곳이 들어감
+		// 세번째 인자 -> 호출되는 함수의 이름만
+		
+		//#kblife 부분을 클릭하면 onhello함수가 호출. 이 때 선택자는 반드시 기존에 있는 태그를 지정
+		$('#future').on('click', '#kblife',  onhello);
+	});//ready
+	
+	
+	function onhello(){
+		alert("onhello calling");
+		
+	};
+	
+    
+
+</script>
+</head>
+<body>
+	<div>
+		<h1>$('selector').on('click')</h1>
+		<p>on함수 기능 : 클릭함수와 동일해보이지만 미래에 존재하는 태그에 사용하는 함수</p>
+	</div>
+	<div id="future"></div>
+</body>
+</html>
+
+
+

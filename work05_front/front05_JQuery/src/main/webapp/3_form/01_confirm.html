@@ -1,0 +1,48 @@
+<!-- JQuery 에서 폼에 입력된 값 받아오거나 form에 값을 입력할 때 쓰는 함수 val()
+	 js에서의 value와 동일 
+	 JQuery에서 화면에 값을 출력하거나 화면의 값을 받아올 때 text(), html()
+	 js에서 innerHTML과 동일-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(function() {
+	//1. a태그 속성 중에서 school 이라는 단어 가 포함된 선택자를 지정
+	/* $('a[href*=school]').click(function(){
+		
+	}) */ 
+	/* $('a[href*=school]').bind('click', function(){
+		
+	}); */
+	$('a[href*=school]').on('click', function(){
+		//return을 해줘야 확인 -> true : 이동 , false : 이동하지 않음
+		//확인 버튼 클릭 시 이동하도록 : return
+		return confirm($(this).html()+ "사이트로 이동할까요?");
+		
+	});
+});
+</script>
+</head>
+<body>
+<a href="http://www.jquery.com">JQuery</a>
+<a href="https://www.w3schools.com/">w3school</a>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

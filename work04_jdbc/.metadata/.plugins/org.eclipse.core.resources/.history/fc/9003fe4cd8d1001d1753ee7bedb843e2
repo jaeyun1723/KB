@@ -1,0 +1,21 @@
+package com.jdbc.test;
+
+import com.jdbc.dao.CustomerDAO;
+
+/*
+ * 1. CustomerDAO객체 생성(==메모리에 올린다)
+ * 2. CustomerDAO의 기능을 호출
+ */
+public class CustomerDAOTest {
+
+	public static void main(String[] args) {
+		System.out.println("a");
+		CustomerDAO dao = new CustomerDAO();
+	}
+
+	
+	static {
+		System.out.println("b");
+		
+	}
+}

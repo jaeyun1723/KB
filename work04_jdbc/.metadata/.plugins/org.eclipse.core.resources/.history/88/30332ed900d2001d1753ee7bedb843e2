@@ -1,0 +1,13 @@
+package jdbc.client;
+
+import jdbc.dao.MemberDAO;
+import jdbc.dao.impl.MemberDAOImpl;
+
+public class MemberDAOImplTest {
+
+	public static void main(String[] args) {
+		MemberDAOImpl dao = MemberDAOImpl.getInstance();
+
+	}
+
+}

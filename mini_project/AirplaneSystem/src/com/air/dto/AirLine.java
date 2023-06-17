@@ -1,0 +1,89 @@
+package com.air.dto;
+
+public class AirLine {	// airline
+	private String airId;	// air_id
+	private String dptTime;	// dpt_time
+	private String arvTime;	// arv_time
+	private String depart;	// depart
+	private String arrival;	// arrival
+	private int totSeat;	// tot_seat
+	private int totPrice;	// tot_price
+	
+	public AirLine(String airId, String dptTime, String arvTime, String depart, String arrival, int seats,
+			int totPrice) {
+		super();
+		this.airId = airId;
+		this.dptTime = dptTime;
+		this.arvTime = arvTime;
+		this.depart = depart;
+		this.arrival = arrival;
+		this.totSeat = seats;
+		this.totPrice = totPrice;
+	}
+
+	public String getAirId() {
+		return airId;
+	}
+
+	public void setAirId(String airId) {
+		this.airId = airId;
+	}
+
+	public String getDptTime() {
+		return dptTime;
+	}
+
+	public void setDptTime(String dptTime) {
+		this.dptTime = dptTime;
+	}
+
+	public String getArvTime() {
+		return arvTime;
+	}
+
+	public void setArvTime(String arvTime) {
+		this.arvTime = arvTime;
+	}
+
+	public String getDepart() {
+		return depart;
+	}
+
+	public void setDepart(String depart) {
+		this.depart = depart;
+	}
+
+	public String getArrival() {
+		return arrival;
+	}
+
+	public void setArrival(String arrival) {
+		this.arrival = arrival;
+	}
+
+	public int getTotSeat() {
+		return totSeat;
+	}
+
+	public void setTotSeat(int totSeat) {
+		this.totSeat = totSeat;
+	}
+
+	public int getTotPrice() {
+		return totPrice;
+	}
+
+	public void setTotPrice(int totPrice) {
+		this.totPrice = totPrice;
+	}
+
+	@Override
+	public String toString() {
+		return "AirLine [airId=" + airId + ", dptTime=" + dptTime + ", arvTime=" + arvTime + ", depart=" + depart
+				+ ", arrival=" + arrival + ", totSeat=" + totSeat + ", totPrice=" + totPrice + "]";
+	}
+
+	
+	
+	
+}

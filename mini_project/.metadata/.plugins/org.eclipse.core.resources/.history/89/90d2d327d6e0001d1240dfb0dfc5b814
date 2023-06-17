@@ -1,0 +1,8 @@
+package com.air.dao.impl;
+
+import com.air.dao.CustomerDAO;
+import com.air.dao.RemainingSeatDAO;
+
+public class RemainingSeatDAOImpl implements RemainingSeatDAO {
+
+}

@@ -1,0 +1,11 @@
+package jdbc.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public interface MemberDAO {
+
+	Connection getConnect() throws SQLException;
+	void closeAll(Connection conn, PreparedStatement ps) throws SQLException;
+}

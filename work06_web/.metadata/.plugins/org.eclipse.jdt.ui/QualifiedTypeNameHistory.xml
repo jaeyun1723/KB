@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="javax.servlet.GenericServlet"/>
+    <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+    <fullyQualifiedTypeName name="java.lang.StringBuffer"/>
+    <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+    <fullyQualifiedTypeName name="web.servlet.model.Member"/>
+    <fullyQualifiedTypeName name="javax.naming.InitialContext"/>
+    <fullyQualifiedTypeName name="javax.naming.Context"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="java.awt.print.PrinterAbortException"/>
+    <fullyQualifiedTypeName name="web.product.model.ProductDAOImpl"/>
+    <fullyQualifiedTypeName name="servlet.CookieServlet"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Member"/>
+    <fullyQualifiedTypeName name="org.apache.catalina.tribes.membership.MemberImpl"/>
+    <fullyQualifiedTypeName name="servlet.model.MemberVO"/>
+    <fullyQualifiedTypeName name="servlet.model.MemberDAO"/>
+    <fullyQualifiedTypeName name="servlet.model.MemberDAOImpl"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="org.eclipse.jdt.internal.compiler.ast.CompactConstructorDeclaration"/>
+    <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Comparator"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="java.util.ResourceBundle.Control"/>
+    <fullyQualifiedTypeName name="web.controller.RegisterController"/>
+    <fullyQualifiedTypeName name="web.controller.UpdateController"/>
+    <fullyQualifiedTypeName name="web.controller.FindController"/>
+    <fullyQualifiedTypeName name="org.eclipse.jdt.internal.compiler.parser.Scanner"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="web.controller.ControllerFactory"/>
+    <fullyQualifiedTypeName name="web.controller.Controller"/>
+</qualifiedTypeNameHistroy>

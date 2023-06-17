@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>forEach()</title>
+<style>
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(function() {
+    $('#eachBtn').click(function(){
+    	var array = [];
+    	array.push("문동은");
+    	array.push("박연진");
+    	array.push("손명호");
+    	array.push("이사라");
+    	
+    	//alert(array); // toString overriding 되어있다.
+    	//alert(array.length); //4 출력됨 -> 배열이라는 뜻
+    	var data='';
+    	$.each(array, function(index, item) {
+			data += item + " "
+		});
+    	//alert(data);
+    	$('#resultView').html('<h2><font color=red>'+ data + '</font></h2>') //출력할 땐 val 이 아닌 html, text: text는 <h2>이런거 안먹힘
+    	
+    })
+  });
+</script>
+</head>
+<body>
+	<input type="button" value="배열 생성하고 each()함수 적용" id="eachBtn">
+	<br><br>
+	
+	<div id="resultView">
+	
+	
+	</div>
+</body>
+</html>

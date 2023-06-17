@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	/* 안보이게 하는 속성 */
+	/* 있는데 안보이는 것 */
+	/* #box{ display:none;} */
+	/* 자리는 차지하지만 보이지 않음 */
+	/* #box{ visibility: hidden;}  */
+	/* blocking 태그의 효력 상실 */
+	/*#box{display:inline;}*/
+	/*#box{display:block;}*/
+	/*결과는 inline 하고 동일, 차이점 ? */
+	#box{display:inline-block;
+		font-size: 20px;
+	}
+</style>
+</head>
+<body>
+<span>Dummy</span>
+<div id="box">
+	<span>An inline element does not start on a new line and only takes up as much width as necessary.</span>
+</div>
+<span>Dummy</span>
+</body>
+</html>

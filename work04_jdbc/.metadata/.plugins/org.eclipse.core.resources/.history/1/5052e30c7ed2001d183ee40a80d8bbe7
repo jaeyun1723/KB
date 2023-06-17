@@ -1,0 +1,1357 @@
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class Main {
+	Connection connection;
+	Statement statement;
+	PreparedStatement pStmt;
+	ResultSet rs;
+
+	int now_movieID = 1; // movieID PK
+	int now_directorID = 1; // directorID PK
+	int now_actorID = 1; // actorID PK
+	int now_awardID = 1; // awardID PK
+	int now_customerID = 1; // customerID PK
+
+	Main() {
+
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Where is your PostgreSQL JDBC Driver? Include in your library path!");
+			e.printStackTrace();
+			return;
+		}
+		System.out.println("PostgreSQL JDBC Driver Registered!");
+
+		connection = null;
+
+		try {
+			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/project_movie", "postgres",
+					"cse3207");
+		} catch (SQLException e) {
+			System.out.println("Connection Failed! Check output console");
+			e.printStackTrace();
+			return;
+		}
+
+		if (connection != null) {
+			System.out.println(connection);
+			System.out.println("You made it, take control your database now!");
+		} else {
+			System.out.println("Failed to make connection!");
+		}
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		String mysql;
+		String table_name;
+		table_name = "director";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( directorID INTEGER PRIMARY KEY, " + "directorName VARCHAR(30), "
+					+ "dateOfBirth DATE, " + "dateOfDeath DATE) ";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "actor";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( actorID INTEGER PRIMARY KEY, " + "actorName VARCHAR(30), "
+					+ "dateOfBirth DATE, " + "dateOfDeath DATE, " + "gender VARCHAR(10) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "movie";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( movieID INTEGER PRIMARY KEY, " + "movieName VARCHAR(30), "
+					+ "releaseYear INTEGER, " + "releaseMonth INTEGER, " + "releaseDate DATE,  "
+					+ "publisherName TEXT, " + "avgRate NUMERIC(3,2) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "award";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( awardID INTEGER PRIMARY KEY, " + "awardName TEXT )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "genre";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( genreName TEXT PRIMARY KEY )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "movieGenre";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( movieID INTEGER REFERENCES movie, "
+					+ "genreName TEXT REFERENCES genre, " + "PRIMARY KEY(movieID, genreName))";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "movieObtain";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( movieID INTEGER REFERENCES movie, "
+					+ "awardID INTEGER REFERENCES award, " + "year INTEGER, " + "PRIMARY KEY(movieID, awardID) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "actorObtain";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( actorID INTEGER REFERENCES actor,"
+					+ "awardID INTEGER REFERENCES award, " + "year INTEGER, " + "PRIMARY KEY(actorID, awardID) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "directorObtain";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( directorID INTEGER REFERENCES director, "
+					+ "awardID INTEGER REFERENCES award, " + "year INTEGER, " + "PRIMARY KEY(directorID, awardID) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "casting";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( movieID INTEGER REFERENCES movie, "
+					+ "actorID INTEGER REFERENCES actor, " + "role VARCHAR(30), " + "PRIMARY KEY(movieID, actorID) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "make";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( movieID INTEGER REFERENCES movie, "
+					+ "directorID INTEGER REFERENCES director, " + "PRIMARY KEY(movieID, directorID) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "customer";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( customerID INTEGER PRIMARY KEY, " + "customerName VARCHAR(20), "
+					+ "dateOfBirth DATE, " + "gender VARCHAR(10) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+
+		table_name = "customerRate";
+		try {
+			mysql = "CREATE TABLE " + table_name + "( customerID INTEGER REFERENCES customer, "
+					+ "movieID INTEGER REFERENCES movie, " + "rate INTEGER, " + "PRIMARY KEY(customerID, movieID) )";
+			statement.execute(mysql);
+		} catch (SQLException e) {
+			System.out.println(table_name + " Error!");
+		}
+		System.out.println(">Create Tables Successfully.");
+	}
+
+	public void insert_movie(int movieID, String movieName, int releaseYear, int releaseMonth, String releaseDate,
+			String publisherName) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO movie VALUES (?,?,?,?,?,?,?)");
+			pStmt.setInt(1, movieID);
+			pStmt.setString(2, movieName);
+			pStmt.setInt(3, releaseYear);
+			pStmt.setInt(4, releaseMonth);
+
+			SimpleDateFormat nowFormat = new SimpleDateFormat("yyyy.mm.dd");
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-mm-dd");
+			java.util.Date tempDate = null;
+			try {
+				tempDate = nowFormat.parse(releaseDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				System.out.println("transfer Date Error.");
+			}
+			String transDate = transFormat.format(tempDate);
+			pStmt.setDate(5, java.sql.Date.valueOf(transDate));
+			pStmt.setString(6, publisherName);
+			pStmt.setInt(7, 0);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT movie Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_director(int directorID, String directorName, String dateOfBirth, String dateOfDeath) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO director VALUES (?,?,?,?)");
+			pStmt.setInt(1, directorID);
+			pStmt.setString(2, directorName);
+
+			SimpleDateFormat nowFormat = new SimpleDateFormat("yyyy.mm.dd");
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-mm-dd");
+			java.util.Date tempDate = null;
+			try {
+				tempDate = nowFormat.parse(dateOfBirth);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				System.out.println("transfer Birth Date Error.");
+			}
+			String transDate = transFormat.format(tempDate);
+			pStmt.setDate(3, java.sql.Date.valueOf(transDate));
+
+			if (dateOfDeath.contentEquals("")) {
+				pStmt.setNull(4, Types.NULL);
+			} else {
+				try {
+					tempDate = nowFormat.parse(dateOfDeath);
+				} catch (ParseException e) {
+					e.printStackTrace();
+					System.out.println("transfer Death Date Error.");
+				}
+				transDate = transFormat.format(tempDate);
+				pStmt.setDate(4, java.sql.Date.valueOf(transDate));
+			}
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT director Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_actor(int actorID, String actorName, String dateOfBirth, String dateOfDeath, String Gender) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO actor VALUES (?,?,?,?,?)");
+			pStmt.setInt(1, actorID);
+			pStmt.setString(2, actorName);
+
+			SimpleDateFormat nowFormat = new SimpleDateFormat("yyyy.mm.dd");
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-mm-dd");
+			java.util.Date tempDate = null;
+			try {
+				tempDate = nowFormat.parse(dateOfBirth);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				System.out.println("transfer Birth Date Error.");
+			}
+			String transDate = transFormat.format(tempDate);
+			pStmt.setDate(3, java.sql.Date.valueOf(transDate));
+
+			if (dateOfDeath.contentEquals("")) {
+				pStmt.setNull(4, Types.NULL);
+			} else {
+				try {
+					tempDate = nowFormat.parse(dateOfDeath);
+				} catch (ParseException e) {
+					e.printStackTrace();
+					System.out.println("transfer Death Date Error.");
+				}
+				transDate = transFormat.format(tempDate);
+				pStmt.setDate(4, java.sql.Date.valueOf(transDate));
+			}
+			pStmt.setString(5, Gender);
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT director Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_customer(int customerID, String customerName, String dateOfBirth, String Gender) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
+			pStmt.setInt(1, customerID);
+			pStmt.setString(2, customerName);
+
+			SimpleDateFormat nowFormat = new SimpleDateFormat("yyyy.mm.dd");
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-mm-dd");
+			java.util.Date tempDate = null;
+			try {
+				tempDate = nowFormat.parse(dateOfBirth);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				System.out.println("transfer Birth Date Error.");
+			}
+			String transDate = transFormat.format(tempDate);
+			pStmt.setDate(3, java.sql.Date.valueOf(transDate));
+			pStmt.setString(4, Gender);
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT customer Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_award(int awardID, String awardName) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO award VALUES (?,?)");
+			pStmt.setInt(1, awardID);
+			pStmt.setString(2, awardName);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT award Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_genre(String genreName) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO genre VALUES (?)");
+			pStmt.setString(1, genreName);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT genre Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_movieGenre(int movieID, String genreName) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO movieGenre VALUES (?,?)");
+			pStmt.setInt(1, movieID);
+			pStmt.setString(2, genreName);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT movieGenre Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_movieObtain(int movieID, int awardID, int year) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO movieObtain VALUES (?,?,?)");
+			pStmt.setInt(1, movieID);
+			pStmt.setInt(2, awardID);
+			pStmt.setInt(3, year);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT movieObtain Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_actorObtain(int actorID, int awardID, int year) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO actorObtain VALUES (?,?,?)");
+			pStmt.setInt(1, actorID);
+			pStmt.setInt(2, awardID);
+			pStmt.setInt(3, year);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT actorObtain Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_directorObtain(int directorID, int awardID, int year) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO directorObtain VALUES (?,?,?)");
+			pStmt.setInt(1, directorID);
+			pStmt.setInt(2, awardID);
+			pStmt.setInt(3, year);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT directorObtain Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_casting(int movieID, int actorID, String role) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO casting VALUES (?,?,?)");
+			pStmt.setInt(1, movieID);
+			pStmt.setInt(2, actorID);
+			pStmt.setString(3, role);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT casting Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_make(int movieID, int directorID) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO make VALUES (?,?)");
+			pStmt.setInt(1, movieID);
+			pStmt.setInt(2, directorID);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT make Error!" + "Reason : " + e);
+		}
+	}
+
+	public void insert_customerRate(int customerID, int movieID, int rate) {
+		try {
+			pStmt = connection.prepareStatement("INSERT INTO customerRate VALUES (?,?,?)");
+			pStmt.setInt(1, customerID);
+			pStmt.setInt(2, movieID);
+			pStmt.setInt(3, rate);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INSERT customerRate Error!" + "Reason : " + e);
+		}
+	}
+
+	public int select_movieID(String movieName) {
+		String SQL = "SELECT movieID FROM movie WHERE movieName = '" + movieName + "'";
+		try {
+			rs = statement.executeQuery(SQL);
+			int movieID = 0;
+			while (rs.next()) {
+				movieID = rs.getInt(1);
+			}
+			return movieID;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int select_actorID(String actorName) {
+		String SQL = "SELECT actorID FROM actor WHERE actorName = '" + actorName + "'";
+		try {
+			rs = statement.executeQuery(SQL);
+			int actorID = 0;
+			while (rs.next()) {
+				actorID = rs.getInt(1);
+			}
+			return actorID;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int select_directorID(String directorName) {
+		String SQL = "SELECT directorID FROM director WHERE directorName = '" + directorName + "'";
+		try {
+			rs = statement.executeQuery(SQL);
+			int directorID = 0;
+			while (rs.next()) {
+				directorID = rs.getInt(1);
+			}
+			return directorID;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int select_awardID(String awardName) {
+		String SQL = "SELECT awardID FROM award WHERE awardName = '" + awardName + "'";
+		try {
+			rs = statement.executeQuery(SQL);
+			int awardID = 0;
+			while (rs.next()) {
+				awardID = rs.getInt(1);
+			}
+			return awardID;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int select_customerID(String customerName) {
+		String SQL = "SELECT customerID FROM customer WHERE customerName = '" + customerName + "'";
+		try {
+			rs = statement.executeQuery(SQL);
+			int customerID = 0;
+			while (rs.next()) {
+				customerID = rs.getInt(1);
+			}
+			return customerID;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public String select_movieName(int movieID) {
+		String SQL = "SELECT movieName FROM movie WHERE movieID = " + movieID;
+		try {
+			rs = statement.executeQuery(SQL);
+			String movieName = "";
+			while (rs.next()) {
+				movieName = rs.getString(1);
+			}
+			return movieName;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "Failed to select_movieName";
+		}
+	}
+
+	public String select_directorName(int directorID) {
+		String SQL = "SELECT directorName FROM director WHERE directorID = " + directorID;
+		try {
+			rs = statement.executeQuery(SQL);
+			String directorName = "";
+			while (rs.next()) {
+				directorName = rs.getString(1);
+			}
+			return directorName;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "Failed to select_directorName";
+		}
+	}
+
+	public String select_actorName(int actorID) {
+		String SQL = "SELECT actorName FROM actor WHERE actorID = " + actorID;
+		try {
+			rs = statement.executeQuery(SQL);
+			String actorName = "";
+			while (rs.next()) {
+				actorName = rs.getString(1);
+			}
+			return actorName;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "Failed to select_actorName";
+		}
+	}
+
+	public void update_avgRate() {
+		String SQL = "UPDATE movie as A set avgRate =(SELECT avg(rate) FROM customerRate as B GROUP BY movieID HAVING A.movieID=B.movieID)";
+		try {
+			statement.executeUpdate(SQL);
+			System.out.println(">UPDATE avgRate");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(">Failed to update avgRate");
+		}
+
+	}
+
+	public void show_award() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM award");
+			System.out.println("[award]");
+			System.out.println("+---------------------------------------------");
+			System.out.println("|awardID      |awardName");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getString(2));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show award Error");
+		}
+	}
+
+	public void show_actorObtain() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM actorObtain");
+			System.out.println("[actorObtain]");
+			System.out.println("+-----------------------------------------------------");
+			System.out.println("|actorID      |awardID      |year");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getInt(2) + "         |" + rs.getInt(3));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show actorObtain Error");
+		}
+	}
+
+	public void show_movieObtain() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM movieObtain");
+			System.out.println("[movieObtain]");
+			System.out.println("+-----------------------------------------------------");
+			System.out.println("|movieID      |awardID      |year");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getInt(2) + "         |" + rs.getInt(3));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show movieObtain Error");
+		}
+	}
+
+	public void show_movieGenre() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM movieGenre");
+			System.out.println("[movieGenre]");
+			System.out.println("+-----------------------------------------------------");
+			System.out.println("|movieID      |genreName");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getString(2));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show movieGenre Error");
+		}
+	}
+
+	public void show_casting() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM casting");
+			System.out.println("[casting]");
+			System.out.println("+-----------------------------------------------------");
+			System.out.println("|movieID      |actorID      |role");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getInt(2) + "         |" + rs.getString(3));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show casting Error");
+		}
+	}
+
+	public void show_make() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM make");
+			System.out.println("[make]");
+			System.out.println("+-----------------------------------------------------");
+			System.out.println("|movieID      |directorID");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getInt(2));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show make Error");
+		}
+	}
+
+	public void show_directorObtain() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM directorObtain");
+			System.out.println("[directorObtain]");
+			System.out.println("+-----------------------------------------------------");
+			System.out.println("|directorID      |awardID      |year");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getInt(2) + "         |" + rs.getInt(3));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show directorObtain Error");
+		}
+	}
+
+	public void show_customer() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM customer");
+			System.out.println("[customer]");
+			System.out.println("+------------------------------------------------------------------------------");
+			System.out.println("|customerID      |customerName      |dateOfBirth      |gender");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getString(2) + "         |" + rs.getDate(3)
+						+ "         |" + rs.getString(4));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show customer Error");
+		}
+	}
+
+	public void show_customerRate() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM customerRate");
+			System.out.println("[customerRate]");
+			System.out.println("+-----------------------------------------------------");
+			System.out.println("|customerID      |movieID      |rate");
+			while (rs.next()) {
+				System.out.println("|" + rs.getInt(1) + "         |" + rs.getInt(2) + "         |" + rs.getInt(3));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show customerRate Error");
+		}
+	}
+
+	public void show_movie() {
+		try {
+			rs = statement.executeQuery("SELECT * FROM movie");
+			System.out.println("[movie]");
+			System.out.println(
+					"+---------------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println(
+					"|movieID   |movieName      |releaseYear   |releaseMonth   |releaseDate   |publisherName         |avgRate");
+			while (rs.next()) {
+				System.out.printf("%-16s%-24s%-16s%-16s%-16s%-32s%-10s\n", "|" + rs.getInt(1), "|" + rs.getString(2),
+						"|" + rs.getInt(3), "|" + rs.getInt(4), "|" + rs.getDate(5), "|" + rs.getString(6),
+						"|" + rs.getFloat(7));
+			}
+			System.out.println();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("show movie Error");
+		}
+	}
+
+	public void delete_movieGenre(int movieID) {
+		String SQL = "DELETE FROM movieGenre WHERE movieID = " + movieID;
+		try {
+			statement.executeUpdate(SQL);
+			System.out.println(">Delete Completely(movieGenre).");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(">Error : Can't delete(movieGenre)");
+		}
+	}
+
+	public void delete_movieObtain(int movieID) {
+		String SQL = "DELETE FROM movieObtain WHERE movieID = " + movieID;
+		try {
+			statement.executeUpdate(SQL);
+			System.out.println(">Delete Completely(movieObtain).");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error : Can't delete(movieObtain)");
+		}
+	}
+
+	public void delete_casting(int movieID) {
+		String SQL = "DELETE FROM casting WHERE movieID = " + movieID;
+		try {
+			statement.executeUpdate(SQL);
+			System.out.println(">Delete Completely(casting).");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error : Can't delete(casting)");
+		}
+	}
+
+	public void delete_make(int movieID) {
+		String SQL = "DELETE FROM make WHERE movieID = " + movieID;
+		try {
+			statement.executeUpdate(SQL);
+			System.out.println(">Delete Completely(make).");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error : Can't delete(make)");
+		}
+	}
+
+	public void delete_customerRate(int movieID) { // movieID = 0 을 입력하면 전체 데이터 삭제 - 8번 쿼리에서 사용
+		String SQL = "DELETE FROM customerRate";
+		if (movieID != 0)
+			SQL = "DELETE FROM customerRate WHERE movieID = " + movieID;
+		try {
+			statement.executeUpdate(SQL);
+			System.out.println(">Delete Completely(customerRate).");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error : Can't delete(customerRate)");
+		}
+	}
+
+	public void delete_movie(int movieID) {
+		String SQL = "DELETE FROM movie WHERE movieID = " + movieID;
+		try {
+			statement.executeUpdate(SQL);
+			System.out.println(">Delete Completely(movie).");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error : Can't delete(movie)");
+		}
+	}
+
+	public static void main(String[] args) throws Exception {
+
+		Inha_Movie_Main Project1 = new Inha_Movie_Main();
+		Connection Mconnection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/project_movie",
+				"postgres", "cse3207");
+		Statement Stmt = Mconnection.createStatement();
+		ResultSet Mrs;
+		String Sql;
+		int movieID; // 테이블에서 ID들을 가져올 때 사용하는 변수들 선언
+		int actorID;
+		int directorID;
+		int customerID;
+		int awardID;
+		boolean Duplicate = false; // awardName이 이미 존재하는지 확인
+		
+		// 1번 쿼리
+		try {
+			Project1.insert_director(Project1.now_directorID, "Tim Burton", "1958.8.25", "");
+			Project1.now_directorID++;
+			Project1.insert_director(Project1.now_directorID, "David Fincher", "1962.8.28", "");
+			Project1.now_directorID++;
+			Project1.insert_director(Project1.now_directorID, "Christopher Nolan", "1970.7.30", "");
+			Project1.now_directorID++;
+
+			Project1.insert_actor(Project1.now_actorID, "Johnny Depp", "1963.6.9", "", "Male");
+			Project1.now_actorID++;
+			Project1.insert_actor(Project1.now_actorID, "Winona Ryder", "1971.10.29", "", "Female");
+			Project1.now_actorID++;
+			Project1.insert_actor(Project1.now_actorID, "Anne Hathaway", "1982.11.12", "", "Female");
+			Project1.now_actorID++;
+			Project1.insert_actor(Project1.now_actorID, "Christian Bale", "1974.1.30", "", "Male");
+			Project1.now_actorID++;
+			Project1.insert_actor(Project1.now_actorID, "Heath Ledger", "1979.4.4", "2008.1.22", "Male");
+			Project1.now_actorID++;
+			Project1.insert_actor(Project1.now_actorID, "Jesse Eisenberg", "1983.10.5", "", "Male");
+			Project1.now_actorID++;
+			Project1.insert_actor(Project1.now_actorID, "Andrew Garfield", "1983.8.20", "", "Male");
+			Project1.now_actorID++;
+			Project1.insert_actor(Project1.now_actorID, "Fionn Whitehead", "1997.7.18", "", "Male");
+			Project1.now_actorID++;
+			Project1.insert_actor(Project1.now_actorID, "Tom Hardy", "1977.9.15", "", "Male");
+			Project1.now_actorID++;
+
+			Project1.insert_customer(Project1.now_customerID, "Bob", "1997.11.14", "Male");
+			Project1.now_customerID++;
+			Project1.insert_customer(Project1.now_customerID, "John", "1978.01.23", "Male");
+			Project1.now_customerID++;
+			Project1.insert_customer(Project1.now_customerID, "Jack", "1980.05.04", "Male");
+			Project1.now_customerID++;
+			Project1.insert_customer(Project1.now_customerID, "Jill", "1981.04.17", "Female");
+			Project1.now_customerID++;
+			Project1.insert_customer(Project1.now_customerID, "Bell", "1990.05.14", "Female");
+			Project1.now_customerID++;
+
+			Project1.insert_movie(Project1.now_movieID, "Edward Scissorhands", 1991, 6, "1991.06.29",
+					"20th Century Fox Presents");
+			Project1.now_movieID++;
+			Project1.insert_movie(Project1.now_movieID, "Alice In Wonderland", 2010, 3, "2010.03.04",
+					"Korea Sony Pictures");
+			Project1.now_movieID++;
+			Project1.insert_movie(Project1.now_movieID, "The Social Network", 2010, 11, "2010.11.18",
+					"Korea Sony Pictures");
+			Project1.now_movieID++;
+			Project1.insert_movie(Project1.now_movieID, "The Dark Knight", 2008, 8, "2008.08.06",
+					"Warner Brothers Korea");
+			Project1.now_movieID++;
+			Project1.insert_movie(Project1.now_movieID, "Dunkirk", 2017, 7, "2017.07.13", "Warner Brothers Korea");
+			Project1.now_movieID++;
+
+			Project1.insert_genre("Fantasy");
+			Project1.insert_genre("Romance");
+			Project1.insert_genre("Adventure");
+			Project1.insert_genre("Family");
+			Project1.insert_genre("Drama");
+			Project1.insert_genre("Action");
+			Project1.insert_genre("Mystery");
+			Project1.insert_genre("Thriller");
+			Project1.insert_genre("War");
+
+			movieID = Project1.select_movieID("Edward Scissorhands");
+			Project1.insert_movieGenre(movieID, "Fantasy");
+			Project1.insert_movieGenre(movieID, "Romance");
+			actorID = Project1.select_actorID("Johnny Depp");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			actorID = Project1.select_actorID("Winona Ryder");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			directorID = Project1.select_directorID("Tim Burton");
+			Project1.insert_make(movieID, directorID);
+
+			movieID = Project1.select_movieID("Alice In Wonderland");
+			Project1.insert_movieGenre(movieID, "Fantasy");
+			Project1.insert_movieGenre(movieID, "Adventure");
+			Project1.insert_movieGenre(movieID, "Family");
+			actorID = Project1.select_actorID("Johnny Depp");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			actorID = Project1.select_actorID("Anne Hathaway");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			directorID = Project1.select_directorID("Tim Burton");
+			Project1.insert_make(movieID, directorID);
+
+			movieID = Project1.select_movieID("The Social Network");
+			Project1.insert_movieGenre(movieID, "Drama");
+			actorID = Project1.select_actorID("Jesse Eisenberg");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			actorID = Project1.select_actorID("Andrew Garfield");
+			Project1.insert_casting(movieID, actorID, "Supporting Actor");
+			directorID = Project1.select_directorID("David Fincher");
+			Project1.insert_make(movieID, directorID);
+
+			movieID = Project1.select_movieID("The Dark Knight");
+			Project1.insert_movieGenre(movieID, "Action");
+			Project1.insert_movieGenre(movieID, "Drama");
+			Project1.insert_movieGenre(movieID, "Mystery");
+			Project1.insert_movieGenre(movieID, "Thriller");
+			actorID = Project1.select_actorID("Christian Bale");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			actorID = Project1.select_actorID("Heath Ledger");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			directorID = Project1.select_directorID("Christopher Nolan");
+			Project1.insert_make(movieID, directorID);
+
+			movieID = Project1.select_movieID("Dunkirk");
+			Project1.insert_movieGenre(movieID, "Action");
+			Project1.insert_movieGenre(movieID, "Drama");
+			Project1.insert_movieGenre(movieID, "Thriller");
+			Project1.insert_movieGenre(movieID, "War");
+			actorID = Project1.select_actorID("Fionn Whitehead");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			actorID = Project1.select_actorID("Tom Hardy");
+			Project1.insert_casting(movieID, actorID, "Main actor");
+			directorID = Project1.select_directorID("Christopher Nolan");
+			Project1.insert_make(movieID, directorID);
+
+			System.out.println(">Initial Data inserted.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Insert Data Error");
+		}
+
+		// 2번 쿼리
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Winona Ryder won the “Best supporting actor” award in 1994");
+		awardID = Project1.now_awardID;
+		System.out.println("Translated SQL : INSERT INTO award VALUES (" + awardID + ", 'Best supporting actor')");
+		Project1.insert_award(Project1.now_awardID, "Best supporting actor");
+		actorID = Project1.select_actorID("Winona Ryder");
+		System.out.println("Translated SQL : INSERT INTO actorObtain VALUES (" + actorID + ", " + awardID + ", 1994)");
+		Project1.insert_actorObtain(actorID, awardID, 1994);
+		System.out.println(">Related Tables States ");
+		Project1.show_award();
+		Project1.show_actorObtain();
+		Project1.now_awardID++;
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Andrew Garfield won the “Best supporting actor” award in 2011");
+		awardID = Project1.select_awardID("Best supporting actor");
+		if (awardID == 0) { // award 중복 확인
+			awardID = Project1.now_awardID;
+			Project1.now_awardID++;
+		} else
+			Duplicate = true;
+		System.out.println("Translated SQL : INSERT INTO award VALUES (" + awardID + ", 'Best supporting actor')");
+		if (Duplicate) // award 중복 확인
+			System.out.println("Award already exists.");
+		else
+			Project1.insert_award(awardID, "Best supporting actor");
+		actorID = Project1.select_actorID("Andrew Garfield");
+		System.out.println("Translated SQL : INSERT INTO actorObtain VALUES (" + actorID + ", " + awardID + ", 2011)");
+		Project1.insert_actorObtain(actorID, awardID, 2011);
+		System.out.println(">Related Tables States ");
+		Project1.show_award();
+		Project1.show_actorObtain();
+		Duplicate = false;
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Jesse Eisenberg won the “Best main actor” award in 2011");
+		awardID = Project1.select_awardID("Best main actor");
+		if (awardID == 0) { // award 중복 확인
+			awardID = Project1.now_awardID;
+			Project1.now_awardID++;
+		} else
+			Duplicate = true;
+		System.out.println("Translated SQL : INSERT INTO award VALUES (" + awardID + ", 'Best main actor')");
+		if (Duplicate) // award 중복 확인
+			System.out.println("Award already exists.");
+		else
+			Project1.insert_award(awardID, "Best main actor");
+		actorID = Project1.select_actorID("Jesse Eisenberg");
+		System.out.println("Translated SQL : INSERT INTO actorObtain VALUES (" + actorID + ", " + awardID + ", 2011)");
+		Project1.insert_actorObtain(actorID, awardID, 2011);
+		System.out.println(">Related Tables States ");
+		Project1.show_award();
+		Project1.show_actorObtain();
+		Duplicate = false;
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Johnny Depp won the “Best villain actor” award in 2011");
+		awardID = Project1.select_awardID("Best villain actor");
+		if (awardID == 0) { // award 중복 확인
+			awardID = Project1.now_awardID;
+			Project1.now_awardID++;
+		} else
+			Duplicate = true;
+		System.out.println("Translated SQL : INSERT INTO award VALUES (" + awardID + ", 'Best villain actor')");
+		if (Duplicate) // award 중복 확인
+			System.out.println("Award already exists.");
+		else
+			Project1.insert_award(awardID, "Best villain actor");
+		actorID = Project1.select_actorID("Johnny Depp");
+		System.out.println("Translated SQL : INSERT INTO actorObtain VALUES (" + actorID + ", " + awardID + ", 2011)");
+		Project1.insert_actorObtain(actorID, awardID, 2011);
+		System.out.println(">Related Tables States ");
+		Project1.show_award();
+		Project1.show_actorObtain();
+		Duplicate = false;
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Edward Scissorhands won the “Best fantasy movie” award in 1991");
+		awardID = Project1.select_awardID("Best fantasy movie");
+		if (awardID == 0) { // award 중복 확인
+			awardID = Project1.now_awardID;
+			Project1.now_awardID++;
+		} else
+			Duplicate = true;
+		System.out.println("Translated SQL : INSERT INTO award VALUES (" + awardID + ", 'Best fantasy movie')");
+		if (Duplicate) // award 중복 확인
+			System.out.println("Award already exists.");
+		else
+			Project1.insert_award(awardID, "Best fantasy movie");
+		movieID = Project1.select_movieID("Edward Scissorhands");
+		System.out.println("Translated SQL : INSERT INTO movieObtain VALUES (" + movieID + ", " + awardID + ", 1991)");
+		Project1.insert_movieObtain(movieID, awardID, 1991);
+		System.out.println(">Related Tables States ");
+		Project1.show_award();
+		Project1.show_movieObtain();
+		Duplicate = false;
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : The Dark Knight won the “Best picture” award in 2009");
+		awardID = Project1.select_awardID("Best picture");
+		if (awardID == 0) { // award 중복 확인
+			awardID = Project1.now_awardID;
+			Project1.now_awardID++;
+		} else
+			Duplicate = true;
+		System.out.println("Translated SQL : INSERT INTO award VALUES (" + awardID + ", 'Best picture')");
+		if (Duplicate) // award 중복 확인
+			System.out.println("Award already exists.");
+		else
+			Project1.insert_award(awardID, "Best picture");
+		movieID = Project1.select_movieID("The Dark Knight");
+		System.out.println("Translated SQL : INSERT INTO movieObtain VALUES (" + movieID + ", " + awardID + ", 2009)");
+		Project1.insert_movieObtain(movieID, awardID, 2009);
+		System.out.println(">Related Tables States ");
+		Project1.show_award();
+		Project1.show_movieObtain();
+		Duplicate = false;
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Alice In Wonderland won the “Best fantasy movie” award in 2011");
+		awardID = Project1.select_awardID("Best fantasy movie");
+		if (awardID == 0) { // award 중복 확인
+			awardID = Project1.now_awardID;
+			Project1.now_awardID++;
+		} else
+			Duplicate = true;
+		System.out.println("Translated SQL : INSERT INTO award VALUES (" + awardID + ", 'Best fantasy movie')");
+		if (Duplicate) // award 중복 확인
+			System.out.println("Award already exists.");
+		else
+			Project1.insert_award(awardID, "Best fantasy movie");
+		movieID = Project1.select_movieID("Alice In Wonderland");
+		System.out.println("Translated SQL : INSERT INTO movieObtain VALUES (" + movieID + ", " + awardID + ", 2011)");
+		Project1.insert_movieObtain(movieID, awardID, 2011);
+		System.out.println(">Related Tables States ");
+		Project1.show_award();
+		Project1.show_movieObtain();
+		Duplicate = false;
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : David Fincher won the “Best director” award in 2011");
+		awardID = Project1.select_awardID("Best director");
+		if (awardID == 0) { // award 중복 확인
+			awardID = Project1.now_awardID;
+			Project1.now_awardID++;
+		} else
+			Duplicate = true;
+		System.out.println("Translated SQL : INSERT INTO award VALUES (" + awardID + ", 'Best director')");
+		if (Duplicate) // award 중복 확인
+			System.out.println("Award already exists.");
+		else
+			Project1.insert_award(awardID, "Best director");
+		directorID = Project1.select_directorID("David Fincher");
+		System.out.println(
+				"Translated SQL : INSERT INTO directorObtain VALUES (" + directorID + ", " + awardID + ", 2011)");
+		Project1.insert_directorObtain(directorID, awardID, 2011);
+		System.out.println(">Related Tables States ");
+		Project1.show_award();
+		Project1.show_directorObtain();
+		Duplicate = false;
+
+		// 3번 쿼리문
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Bob rates 5 to “The Dark Knight”");
+		movieID = Project1.select_movieID("The Dark Knight");
+		customerID = Project1.select_customerID("Bob");
+		System.out.println(
+				"Translated SQL : INSERT INTO customerRate VALUES (" + customerID + ", " + movieID + ", " + 5 + ")");
+		Project1.insert_customerRate(customerID, movieID, 5);
+		Project1.update_avgRate();
+		System.out.println(">Related Tables States ");
+		Project1.show_customerRate();
+		Project1.show_movie();
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Bell rates 5 to the movies whose director is “Tim Burton”");
+		directorID = Project1.select_directorID("Tim Burton");
+		customerID = Project1.select_customerID("Bell");
+		Sql = "SELECT movieID FROM make WHERE directorID = " + directorID;
+		try {
+			Mrs = Stmt.executeQuery(Sql);
+			while (Mrs.next()) {
+				movieID = Mrs.getInt(1);
+				System.out.println("Translated SQL : INSERT INTO customerRate VALUES (" + customerID + ", " + movieID
+						+ ", " + 5 + ")");
+				Project1.insert_customerRate(customerID, movieID, 5);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Project1.update_avgRate();
+		System.out.println(">Related Tables States ");
+		Project1.show_customerRate();
+		Project1.show_movie();
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Jill rates 4 to the movies whose main actor is female");
+		System.out.println(
+				"Translated SQL : SELECT movieID FROM (actor NATURAL JOIN casting) AS actor_casting_movie WHERE gender = 'Female' AND actor_casting_movie.role = 'Main actor'");
+		customerID = Project1.select_customerID("Jill");
+		Sql = "SELECT movieID FROM (actor NATURAL JOIN casting) AS actor_casting_movie WHERE gender = 'Female' AND actor_casting_movie.role = 'Main actor'";
+		try {
+			Mrs = Stmt.executeQuery(Sql);
+			while (Mrs.next()) {
+				movieID = Mrs.getInt(1);
+				System.out.println("Translated SQL : INSERT INTO customerRate VALUES (" + customerID + ", " + movieID
+						+ ", " + 4 + ")");
+				Project1.insert_customerRate(customerID, movieID, 4);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Project1.update_avgRate();
+		System.out.println(">Related Tables States ");
+		Project1.show_customerRate();
+		Project1.show_movie();
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Jack rates 4 to the fantasy movies");
+		System.out.println("Translated SQL : SELECT movieID FROM movieGenre WHERE genreName = 'Fantasy'");
+		customerID = Project1.select_customerID("Jack");
+		Sql = "SELECT movieID FROM movieGenre WHERE genreName = 'Fantasy'";
+		try {
+			Mrs = Stmt.executeQuery(Sql);
+			while (Mrs.next()) {
+				movieID = Mrs.getInt(1);
+				System.out.println("Translated SQL : INSERT INTO customerRate VALUES (" + customerID + ", " + movieID
+						+ ", " + 4 + ")");
+				Project1.insert_customerRate(customerID, movieID, 4);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Project1.update_avgRate();
+		System.out.println(">Related Tables States ");
+		Project1.show_customerRate();
+		Project1.show_movie();
+
+		System.out.println("===========================================================================");
+		System.out.println("Statement : John rates 5 to the movies whose director won the “Best director” award");
+		System.out.println(
+				"Translated SQL : SELECT movieID FROM make NATURAL JOIN (directorObtain NATURAL JOIN award) WHERE awardName = 'Best director'");
+		customerID = Project1.select_customerID("John");
+		Sql = "SELECT movieID FROM make NATURAL JOIN (directorObtain NATURAL JOIN award) WHERE awardName = 'Best director'";
+		try {
+			Mrs = Stmt.executeQuery(Sql);
+			while (Mrs.next()) {
+				movieID = Mrs.getInt(1);
+				System.out.println("Translated SQL : INSERT INTO customerRate VALUES (" + customerID + ", " + movieID
+						+ ", " + 5 + ")");
+				Project1.insert_customerRate(customerID, movieID, 5);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Project1.update_avgRate();
+		System.out.println(">Related Tables States ");
+		Project1.show_customerRate();
+		Project1.show_movie();
+
+		// 4번 쿼리
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Select the names of the movies whose actor are dead.");
+		System.out.println(
+				"Translated SQL : SELECT movieID, actor_dead.actorName FROM casting NATURAL JOIN (SELECT actorID, actorName FROM actor WHERE dateOfDeath IS NOT NULL) AS actor_dead");
+		Sql = "SELECT movieID, actor_dead.actorName FROM casting NATURAL JOIN (SELECT actorID, actorName FROM actor WHERE dateOfDeath IS NOT NULL) AS actor_dead";
+		try {
+			Mrs = Stmt.executeQuery(Sql);
+			while (Mrs.next()) {
+				movieID = Mrs.getInt(1);
+				String actorName = Mrs.getString(2);
+				System.out.println("Translated SQL : SELECT movieName FROM movie WHERE movieID = " + movieID);
+				String movieName = Project1.select_movieName(movieID);
+				System.out.println(">Movie : " + movieName + " (Dead actor : " + actorName + ")");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error: the movies whose actor are dead.");
+		}
+
+		// 5번 쿼리
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Select the names of the directors who cast the same actor more than once.");
+		System.out.println(
+				"Translated SQL : SELECT directorID, actorID FROM casting NATURAL JOIN make GROUP BY directorID, actorID HAVING COUNT(*) > 1");
+		Sql = "SELECT directorID, actorID FROM casting NATURAL JOIN make GROUP BY directorID, actorID HAVING COUNT(*) > 1";
+		try {
+			Mrs = Stmt.executeQuery(Sql);
+			while (Mrs.next()) {
+				directorID = Mrs.getInt(1);
+				actorID = Mrs.getInt(2);
+				String directorName = Project1.select_directorName(directorID);
+				String actorName = Project1.select_actorName(actorID);
+				System.out.println(">director : " + directorName + " || >actor(more than once) : " + actorName);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error : directors who cast the same actor more than once.");
+		}
+
+		// 6번 쿼리
+		System.out.println("===========================================================================");
+		System.out.println(
+				"Statement : Select the names of the movies and the genres, where movies have the common genre.");
+		System.out.println(
+				"Translated SQL : SELECT movieName, genreName FROM movie NATURAL JOIN movieGenre ORDER BY genreName");
+		Sql = "SELECT movieName, genreName FROM movie NATURAL JOIN movieGenre ORDER BY genreName";
+		try {
+			Mrs = Stmt.executeQuery(Sql);
+			String common_genre = ""; // 공통장르
+			String movies = ""; // 공통된 장르의 영화
+			int same_cnt = 0;	// 공통된 장르영화 개수
+			String movieName;
+			String genreName;
+			while (Mrs.next()) {
+				movieName = Mrs.getString(1);
+				genreName = Mrs.getString(2);
+				if (common_genre.contentEquals("")) { // if~else문 : 장르입력하고 공통된 장르끼리 movies에 저장한 후 다른 장르나오면 이때까지의 공통된 장르의
+					// 영화 출력
+					common_genre = genreName;
+					movies = movieName;
+					same_cnt++;
+				} else if (common_genre.contentEquals(genreName)) {
+					movies += ", " + movieName;
+					same_cnt++;
+				} else {
+					if (same_cnt != 1)		// 공통된 장르영화가 1개가 아니면 출력
+						System.out.println(">" + common_genre + "(" + same_cnt + ")" + " : " + movies);
+					common_genre = genreName;
+					same_cnt = 1;
+					movies = movieName;
+				}
+			}
+			if (same_cnt != 1)		// 공통된 장르영화가 1개가 아니면 출력
+				System.out.println(">" + common_genre + "(" + same_cnt + ")" + " : " + movies);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error : the names of the movies and the genres, where movies have the common genre.");
+		}
+
+		// 7번 쿼리
+		System.out.println("===========================================================================");
+		System.out.println(
+				"Statement : Delete the movies which did not get any award (including all directors and actors) and delete data from related tables.");
+		System.out.println(
+				"Translated SQL : SELECT movieID, movieName FROM movie WHERE movieID NOT IN ((SELECT movieID FROM movieObtain)\n "
+						+ "       UNION (SELECT  movieID FROM directorObtain NATURAL JOIN make) UNION (SELECT movieID FROM actorObtain NATURAL JOIN casting))");
+		Sql = "SELECT movieID, movieName FROM movie WHERE movieID NOT IN ((SELECT movieID FROM movieObtain) UNION (SELECT  movieID FROM directorObtain NATURAL JOIN make) UNION (SELECT movieID FROM actorObtain NATURAL JOIN casting))";
+		try {
+			Mrs = Stmt.executeQuery(Sql);
+			while (Mrs.next()) {
+				movieID = Mrs.getInt(1);
+				String movieName = Mrs.getString(2);
+				System.out.println("Translated SQL : DELETE FROM movieGenre WHERE moiveID = " + movieID);
+				Project1.delete_movieGenre(movieID);
+				System.out.println("Translated SQL : DELETE FROM casting WHERE moiveID = " + movieID);
+				Project1.delete_casting(movieID);
+				System.out.println("Translated SQL : DELETE FROM customerRate WHERE moiveID = " + movieID);
+				Project1.delete_customerRate(movieID);
+				System.out.println("Translated SQL : DELETE FROM make WHERE moiveID = " + movieID);
+				Project1.delete_make(movieID);
+				System.out.println("Translated SQL : DELETE FROM movieObtain WHERE moiveID = " + movieID);
+				Project1.delete_movieObtain(movieID);
+
+				System.out.println("Translated SQL : DELETE FROM movie WHERE moiveName = '" + movieName + "'");
+				Project1.delete_movie(movieID);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(
+					"Error : Delete the movies which did not get any award (including all directors and actors) and delete data from related tables.");
+		}
+		System.out.println(">Related Tables States ");
+		Project1.show_movieGenre();
+		Project1.show_casting();
+		Project1.show_customerRate();
+		Project1.show_make();
+		Project1.show_movieObtain();
+		Project1.show_movie();
+
+		// 8번 쿼리
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Delete all customers and delete data from related tables.");
+		System.out.println("Translated SQL : DELETE FROM customerRate");
+		Project1.delete_customerRate(0);	// 모두 삭제
+		Project1.update_avgRate();
+		System.out.println("Translated SQL : DELETE FROM customer");
+		Sql = "DELETE FROM customer";
+		try {
+			Stmt.executeUpdate(Sql);
+			System.out.println(">Delete All customer");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Failed to delete customer");
+		}
+		System.out.println(">Related Tables States ");
+		Project1.show_customerRate();
+		Project1.show_customer();
+		Project1.show_movie();
+
+		// 9번 쿼리
+		System.out.println("===========================================================================");
+		System.out.println("Statement : Delete all tables and data.");
+		System.out.println(
+				"Translated SQL : DROP TABLE movieObtain, actorObtain, directorObtain, make, casting, customerRate, movieGenre, genre, award, customer, movie, actor, director");
+		Sql = "DROP TABLE movieObtain, actorObtain, directorObtain, make, casting, customerRate, movieGenre, genre, award, customer, movie, actor, director";
+		try {
+			Project1.statement.executeUpdate(Sql);
+			System.out.println(">Drop All tables.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(">Failed to drop tables.");
+		}
+
+		Mconnection.close();
+		Project1.connection.close();
+	}
+}

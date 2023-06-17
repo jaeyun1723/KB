@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;web05_register&apos; to &apos;web05_Register&apos;" description="Rename resource &apos;web05_register&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/web05_register" name="web05_Register" stamp="1681712442543" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;web08_CafeMember&apos; to &apos;web11_CafeMember_MVC&apos;" description="Rename resource &apos;web08_CafeMember&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/web08_CafeMember" name="web11_CafeMember_MVC" stamp="1681876952941" updateReferences="true"/>
+</session>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/* 1. form  에 입력 된 값이 없다면, 나이는 반드시 입력하세요. 메세지를 띄우고
+	2. 숫자 대신에 문자가 입력되면, 나이는 숫자로 입력하세요. 
+	3. 입력된 숫자 값이 19세 이상이라면 성인인증
+	4. 입력된 숫자값이 19세 미만이라면 미성년인증
+	
+	5. 모든 경우에 입력된 값이 리셋되면 다시 age에 focus 가 맞춰짐 */
+	function checkAge(){
+		let ageFrm = document.frm.ageFrm;
+		//alert(ageFrm);
+		//value : form 안에 값을 받아오거나 집어넣거나
+		if(ageFrm.value==""){ //입력 된 값이 없다면
+			alert("나이는 반드시 입력하세요.");	
+		}else if(isNaN(ageFrm.value)){ //isNotANumber : 숫자가 아니다.
+			alert("나이는 숫자로 입력하세요.");	
+		}else if(ageFrm.value >=19){ //isNotANumber : 숫자가 아니다.
+			alert("당신은 성인인증 되셨습니다.");	
+		}else if(ageFrm.value < 19){
+			alert("당신은 미성년자 입니다.")
+		}
+		
+		ageFrm.value=""; //reset
+		ageFrm.focus(); //마우스 focus
+		
+	}
+
+</script>
+
+</head>
+<body>
+	<h2>Adult movie 19</h2>
+	<form name="frm">
+	<fieldset style="width : 200px">
+		<!--  required="required" 넣어주면 값이 비었는지는 체크 하지 않아도 됨  -->
+		나이 : <input type="text" name="ageFrm"><br><br> 
+		<button type = "button" onclick="checkAge()"> 나이 확인 </button>
+	</fieldset>
+		
+	
+	
+	
+	
+	</form>
+</body>
+</html>

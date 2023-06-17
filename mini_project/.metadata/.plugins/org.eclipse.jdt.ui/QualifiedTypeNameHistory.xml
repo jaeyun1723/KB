@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="com.air.dao.AirLineDAO"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="config.ServerInfo"/>
+    <fullyQualifiedTypeName name="com.air.dao.ReservationDAO"/>
+    <fullyQualifiedTypeName name="com.air.dao.SeatDAO"/>
+    <fullyQualifiedTypeName name="com.air.exception.RecordNotFoundException"/>
+    <fullyQualifiedTypeName name="com.air.dto.Reservation"/>
+    <fullyQualifiedTypeName name="com.air.dao.SeatReservationDAO"/>
+    <fullyQualifiedTypeName name="com.air.dao.impl.CustomerDAOImpl"/>
+    <fullyQualifiedTypeName name="com.air.dao.impl.AirLineDAOImpl"/>
+    <fullyQualifiedTypeName name="com.air.dto.AirLine"/>
+    <fullyQualifiedTypeName name="com.air.dao.impl.ReservationDAOImpl"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.air.dto.Seat"/>
+    <fullyQualifiedTypeName name="com.air.dao.RemainingSeatDAO"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="com.air.exception.DuplicateAirLineException"/>
+</qualifiedTypeNameHistroy>

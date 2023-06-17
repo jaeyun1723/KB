@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	function push() {
+		alert("버튼이 눌러졌어요~~!!");
+	}
+</script>
+<style type="text/css">
+	/* body 태그 선택자 지정...화면 전체 스타일 */
+	body{
+		width: 600px;
+		height: 400px;
+		margin: 0 auto;
+	}
+	#order{
+		float: left;
+		width: 300px;
+	}
+	#unorder{
+		float: right;
+		width: 300px;
+	}
+	
+	#header{
+		color: tomato;
+	}
+</style>
+</head>
+<body>
+<div id ="header">
+	<h1>This is heading 1</h1>
+	<h2>This is heading 2</h2>
+	<h3>This is heading 3</h3>
+	<h4>This is heading 4</h4>
+	<h5>This is heading 5</h5>
+	<h6>This is heading 6</h6>
+</div>
+<br>
+<div id="order">
+	<p>Order List</p>
+	<p>순번을 가지는 목록</p>
+	<ol>
+		<li><a href="https://java.sun.com">JAVA</a></li>
+		<li><a href="https://oracle.com">JDBC</a></li>
+		<li><a href="https://www.w3schools.com/">HTML</a></li>
+		<li><a href="https://tomcat.apache.org">SERVLET</a></li>
+	</ol>
+</div>
+<div id="unorder">
+	<p>UnOrder List</p>
+	<p>순번을 가지지 않는 목록</p>
+	<ul>
+		<li>JAVA</li>
+		<li>JDBC</li>
+		<li>HTML</li>
+		<li>SERVLET</li>
+	</ul>
+</div>
+
+<hr>
+<!-- 버튼클릭하면 push함수가 호출 :: 자바스크립트 함수로 연결 -->
+<button onclick="push()">눌러주세요</button>
+</body>
+</html>

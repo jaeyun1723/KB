@@ -1,0 +1,85 @@
+package com.jdbc.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.jdbc.domain.Customer;
+import com.jdbc.exception.DuplicateSSNException;
+import com.jdbc.exception.RecordNotFoundException;
+
+import config.ServerInfo;
+
+public class CustomerDAOImpl implements CustomerDAO {
+
+	private static CustomerDAOImpl dao = new CustomerDAOImpl();
+
+	private CustomerDAOImpl() {
+
+	}
+
+	public static CustomerDAOImpl getInstance() {
+		return dao;
+	}
+
+	@Override
+	public Connection getConnect() throws SQLException {
+		Connection conn = DriverManager.getConnection(ServerInfo.URL, ServerInfo.USER, ServerInfo.PASS);
+		System.out.println("DB Connection...OK");
+		return conn;
+	}
+
+	@Override
+	public void closeAll(Connection conn, PreparedStatement ps) throws SQLException {
+		if (ps != null)
+			ps.close();
+		if (conn != null)
+			conn.close();
+	}
+
+	@Override
+	public void closeAll(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
+		if (rs != null)
+			rs.close();
+		closeAll(conn, ps);
+	}
+
+	@Override
+	public void registerCustomer(Customer vo) throws SQLException, DuplicateSSNException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void removeCustomer(String ssn) throws SQLException, RecordNotFoundException {
+		Connection conn=null;
+		PreparedStatement ps=null;
+		try {
+			
+		}finally {
+			closeAll(conn, ps);
+		}
+	}
+
+	@Override
+	public void updateCustomer(Customer vo) throws SQLException, RecordNotFoundException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Customer getCustomer(String ssn) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Customer> getCustomer() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

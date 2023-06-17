@@ -1,0 +1,36 @@
+package com.jdbc.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import oracle.security.o3logon.a;
+/*
+ * DB연결 프로그램에 서버 정보에 관련된 실제값이 하드코딩 되어져있다.
+ * 드라이버, FQCN, 서버 주소, 계정 이름, 비번... 노출되면 안됌. --> Meta Data화 시켜야함
+ * -- Meta Data화 = 파일로 분리(xml, properties)
+ */
+public class DBConnectTest3 {
+
+	public DBConnectTest3() throws ClassNotFoundException, SQLException {
+		Class.forName("oracle.jdbc.driver.OracleDriver");// FQCN
+		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "kb_db", "1234");
+		String query = "SELECT id, name, address FROM custom";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			System.out.println(
+					rs.getInt(1) + "\t" + 
+					rs.getString(2) + "\t" + 
+					rs.getString(3));
+		}
+
+	
+	}
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+			new DBConnectTest3();
+	}//
+}//

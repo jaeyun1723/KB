@@ -1,0 +1,17 @@
+package com.edu.test;
+
+// 원래 인터페이스는 public
+// 인터페이스 구성요소 :: 추상메소드 + static final 상수(필드가 없다)
+interface Flyer{
+	public abstract void fly(); // 완벽한 템플릿... 구현부가 없다
+	
+}
+
+public class InterfaceAppTest1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>workshop01</title>
+
+<style type="text/css">
+body {
+	width: 800px;
+	height: 1250px;
+	margin: 0 auto;
+	border-style: solid;
+	border-color: red;
+	padding-top: 40px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-bottom: 30px;
+}
+
+header>h1 {
+	font-size: 50px;
+}
+
+h2 {
+	font-size: 35px;
+	font-weight: bold;
+}
+
+header>h1, h2 {
+	text-align: center;
+}
+
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 55%;
+}
+
+.fee {
+	word-spacing: 30px;
+}
+
+#drink {
+	border: 0.1px solid black;
+	padding: 10px;
+}
+</style>
+</head>
+<body>
+	<header>
+		<h1>Kill 복 순</h1>
+	</header>
+
+	<h2>==== KB ★ 영화예매 ====</h2>
+
+	<img
+		src="https://img.khan.co.kr/news/2023/03/29/news-p.v1.20230327.3904a1362a44464ea935a197687ae8ca_P1.png" />
+	<br>
+	<br> 상영관
+	<select name="theater">
+		<option value="CGV">CGV</option>
+		<option value="MEGABOX">MEGABOX</option>
+		<option value="LOTTE CINEMA">LOTTE CINEMA</option>
+		<option value="기타">기타</option>
+	</select> 날짜 선택
+	<input type='date'>
+	<br>
+	<fieldset>
+		<legend> 시간 선택</legend>
+		<input type="radio" value="830">08:30 <input type="radio"
+			value="1100">11:00 <input type="radio" value="1420">14:20
+		<input type="radio" value="1735">17:35 <input type="radio"
+			value="2010">20:10 <input type="radio" value="2305">23:05
+	</fieldset>
+	<br>
+	<div class="fee">
+		요금
+		<del>W9,000</del>
+		<u>W5,000</u>
+	</div>
+	<br>
+	<br> 인원
+	<input type="text" placeholder="0"></input>
+	<br>
+	<br> 금액
+	<input type="text" placeholder="0"></input>
+	<br>
+	<br>
+	<input type="checkbox" checked> 옵션
+	<br>
+	<br>
+
+	<div id="drink">
+		<input type="checkbox">팝콘 <input type="checkbox">콜라
+	</div>
+
+	<br>
+
+
+</body>
+</html>
+

@@ -1,0 +1,101 @@
+package com.air.dto;
+
+import java.util.ArrayList;
+
+public class Customer {
+	private int custId;
+	private String custName;
+	private String phone;
+	private String birthdate;
+	private String email;
+	private static double point;
+	private ArrayList<Reservation> resList;
+	private static final double BASIC_POINT = 0;
+
+	public Customer(int custId, String custName, String phone, String birthdate, String email, double point) {
+		super();
+		this.custId = custId;
+		this.custName = custName;
+		this.phone = phone;
+		this.birthdate = birthdate;
+		this.email = email;
+		this.point = point;
+	}
+	
+	public Customer(String custName, String phone, String birthdate, String email, double point) {
+		super();
+		
+		this.custName = custName;
+		this.phone = phone;
+		this.birthdate = birthdate;
+		this.email = email;
+		this.point = point;
+	}
+
+	public Customer(int custId, String custName, String phone, String birthdate, String email) {
+		this(custId, custName, phone, birthdate, email, BASIC_POINT);
+	}
+
+	public int getCustId() {
+		return custId;
+	}
+
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+
+	public String getCustName() {
+		return custName;
+	}
+
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public double getPoint() {
+		return point;
+	}
+
+	public void setPoint(double point) {
+		this.point = point;
+	}
+
+	public ArrayList<Reservation> getResList() {
+		return resList;
+	}
+
+	public void setResList(ArrayList<Reservation> resList) {
+		this.resList = resList;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [custId=" + custId + ", custName=" + custName + ", phone=" + phone + ", birthdate=" + birthdate
+				+ ", email=" + email + ", point=" + point + "]";
+	}
+
+}

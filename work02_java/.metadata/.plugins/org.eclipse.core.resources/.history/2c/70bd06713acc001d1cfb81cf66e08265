@@ -1,0 +1,20 @@
+package com.ed.access.test;
+
+class Parent {
+	public String publicVar = "publicVar";
+	protected String protectedVar = "protectedVar";
+	String var = "var";
+}
+
+class Child {
+
+}
+
+public class AccessAppTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

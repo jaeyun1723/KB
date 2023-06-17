@@ -1,0 +1,33 @@
+package com.jdbc.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import oracle.security.o3logon.a;
+
+public class DBConnectTest2 {
+
+	public static void main(String[] args) {
+		try {
+		// 1. 드라이버 로딩
+			Class.forName("oracle.jdbc.driver.OracleDriver");// FQCN
+//			2. 디비연결..Connection반환
+			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", 
+					"kb_db", "1234");
+//			3. PreparedStatement 객체 생성..args 이때 인자값으로 쿼리문 입력(delete..333삭제)
+			String query = "DELET FROM CUSTOM WHERE id = ?";
+			PreparedStatement ps=conn.prepareStatement(query);
+			ps.setInt(1, 333);
+			System.out.println(ps.executeUpdate()+"delete OK");
+//			4. 쿼리문 실행
+			
+		} catch (ClassNotFoundException e) {
+			System.out.println("1. Driver Loading...Fail...");
+		} catch (SQLException e) {
+			System.out.println("2. DB Connect...Fail...");
+		}
+
+	}//
+}//

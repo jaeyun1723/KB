@@ -1,0 +1,11 @@
+package com.edu.test;
+
+import java.util.HashMap;
+
+public class HashMapTest4 {
+
+	public static void main(String[] args) {
+		Map<String, Integer> map = new HashMap<>();
+	}
+
+}

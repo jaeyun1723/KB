@@ -1,0 +1,9 @@
+package com.edu.test;
+
+public class PropertiesTest {
+
+	public static void main(String[] args) {
+		Properties p =System.getProperties();
+	}
+
+}

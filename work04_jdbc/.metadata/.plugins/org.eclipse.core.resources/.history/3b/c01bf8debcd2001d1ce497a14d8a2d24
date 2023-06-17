@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+		int brown = 10, yellow = 2;
+		int[] answer = new int[2];
+		int[][] johap = new int[yellow / 2][2];
+
+		int start = 1;
+		int idx = 0;
+
+		while (true) {
+			if (yellow % start == 0) {
+				johap[idx][0] = yellow / start;
+				johap[idx][1] = start;
+				idx++;
+			}
+			System.out.println(yellow/start);
+			System.out.println(start);
+			System.out.println(idx);
+			if (yellow / start < start)
+				break;
+			System.out.println("hi");
+			start++;
+		}
+
+		for (int i = 0; i < johap.length; i++) {
+			if (((johap[i][0] + 2) * 2 + johap[i][1] * 2) == brown) {
+				answer[0] = johap[i][0];
+				answer[1] = johap[i][1];
+			} else
+				continue;
+		}
+		
+		System.out.println(answer[0]+", "+ answer[1]);
+		
+	}//
+
+}//

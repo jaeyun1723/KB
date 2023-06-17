@@ -1,0 +1,20 @@
+package com.edu.test;
+
+class Car {
+	int serialNumber;
+	static int counter;
+
+	Car() {
+		counter++;
+		serialNumber = counter;
+	}
+}
+
+public class StaticExamTest2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

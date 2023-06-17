@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 3 elements from project &apos;front03_css3_layout&apos;&#x0D;&#x0A;- Original project: &apos;front03_css3_layout&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     css04_flexbox_exam_template.html&#x0D;&#x0A;     css04_flexbox_template.html&#x0D;&#x0A;     css05_flexbox_template.html" description="Delete elements" element1="src/main/webapp/WEB-INF/css04_flexbox_exam_template.html" element2="src/main/webapp/WEB-INF/css04_flexbox_template.html" element3="src/main/webapp/WEB-INF/css05_flexbox_template.html" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="3" stamp="1681174161247" subPackages="false" version="1.0"/>
+</session>

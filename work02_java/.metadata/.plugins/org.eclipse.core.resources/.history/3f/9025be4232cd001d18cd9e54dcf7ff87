@@ -1,0 +1,22 @@
+package com.edu.exception.test;
+
+/*
+ * CompileException
+ * 1. 컴파일 X :: 컴파일러가 인식
+ * 2. 반드시 명시적으로 예외처리해서 사용해야하는 일종의 문법구조
+ */
+class FileReading{
+	public void readFile(String fileName) {
+		
+	}
+}
+public class CompileExceptionTest2 {
+
+	public static void main(String[] args) {
+		FileReading fr=new FileReading();
+		fr.readFile("C:\\KB\\workshop_homwork\\java_r_01\\java_r1_Workshop.pdf");
+		
+		System.out.println("3. 파일을 잘 읽어들였습니다.");
+	}
+
+}

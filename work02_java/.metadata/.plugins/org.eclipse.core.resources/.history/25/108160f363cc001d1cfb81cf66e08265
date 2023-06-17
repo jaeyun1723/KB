@@ -1,0 +1,19 @@
+package com.edu.test;
+
+/*
+ *  static한 멤버는 객체생성 없이 사용가능
+ *  로켈 레벨에서 사용 안됨
+ */
+
+class StaticExam{
+	static String name1 = "홍길동";
+	String name2 = "문동은";
+}
+public class StaticExamTest1 {
+
+	public static void main(String[] args) {
+		static String name1 = "홍길동";
+		String name2 = "문동은";
+	}
+
+}

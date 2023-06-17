@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>함수를 정의하는 방법 :: 1)선언적 함수 선언 2)익명 함수 선언</title>
+<script>
+// 1. 선언적 함수 정의
+// 선언적 함수로 정의하게 되면, 지금처럼 파일이 다 로딩되고 나서 메모리에 올라가는 것이 아닌
+// 이 부분이 먼저 미리 메모리에 올라감, 그리고 script 가 실행됨.
+// 따라서 func B... 출력 됨
+/* func();
+
+function func() {
+	alert("func A...")
+}
+//재정의
+function func() {
+	alert("func B...")
+} 
+//func(); // 호출 */
+
+//2. 익명 함수 정의 -- 변수에 할당해서 정의한다.
+// 익명 함수 -> 이름이 없음 -> 부르질 못함 -> 호출하지 못함.
+// 정의해두고 사용하려면 변수에 할당하고, 호출은 변수명으로 하면 됨.
+// 변수명을 호출
+// 이건 호출 되지 않는 것이 맞음!!
+/* func1();
+
+var func1 = function(){
+	alert("fucn1...A...");
+}
+
+var func1 = function(){
+	alert("func1...B...");	
+}
+
+func1();
+ */
+//3. 익명 함수 + 선언적 함수 ==> 실행 순서
+
+var func2 = function(){
+	alert("func2...Anonymous...");
+}
+
+function func2() {
+	alert("func2 function...")
+}
+
+func2(); // func2...Anonymous... 출력됨
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

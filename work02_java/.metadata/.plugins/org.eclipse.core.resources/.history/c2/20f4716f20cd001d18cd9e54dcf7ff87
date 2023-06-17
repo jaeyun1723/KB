@@ -1,0 +1,20 @@
+package com.edu.test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class HashMapTest4 {
+
+	public static void main(String[] args) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("강호동", 85);
+		map.put("이수근", 95);
+		map.put("서장훈", 100);
+		map.put("김영철", 90);
+		map.put("김희철", 85);
+		
+		for(Map m:map)
+			System.out.println(m.get(map));
+	}
+
+}

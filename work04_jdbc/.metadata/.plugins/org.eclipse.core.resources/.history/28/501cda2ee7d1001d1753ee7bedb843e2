@@ -1,0 +1,12 @@
+package com.jdbc.domain;
+/*
+ * Customer 테이블의 정보를 저장하는 클래스
+ * Encapsulation 패턴으로 작성
+ * Customer 생성자 오버로딩
+ */
+public class Customer {
+	private String ssn;
+	private String name;
+	private String address;
+	public static final String BASIC_ADDR = "선릉";
+}

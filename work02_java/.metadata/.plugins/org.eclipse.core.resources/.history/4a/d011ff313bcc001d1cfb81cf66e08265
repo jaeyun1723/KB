@@ -1,0 +1,31 @@
+package com.ed.access.test;
+
+class Parent {
+	public String publicVar = "publicVar";
+	protected String protectedVar = "protectedVar";
+	String var = "var";
+	private String privateVar = "privateVar";
+
+	Parent() {
+
+	}
+
+	public void access() {
+		System.out.println("Access Modifier Test...");
+	}
+}
+
+class Child extends Parent {
+	public void test() {
+		System.out.println(publicVar);
+	}
+}
+
+public class AccessAppTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

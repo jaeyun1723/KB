@@ -1,0 +1,27 @@
+package com.edu.exception.test3;
+
+/*
+ * 사용자정의 Exception
+ * 1. 내가 직접 Exception 클래스를 만들어서 사용...
+ * 2. 특정한 조건일때 내가 고의적으로 예외를 발생시키는 경우...
+ * "예외는 일종의 버그가 아니라
+ * 강력한 제어문의 일종"
+ */
+
+class ACase {
+	public void go() {
+		int i = 10;
+		int j = 0;
+		
+		if(j==0)
+	}
+}
+
+public class UserExceptionTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

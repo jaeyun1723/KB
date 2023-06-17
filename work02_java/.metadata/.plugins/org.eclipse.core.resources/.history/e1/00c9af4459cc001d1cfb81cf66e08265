@@ -1,0 +1,29 @@
+package com.edu.service;
+
+public class EmployeeService {
+	/*
+	 * 기능들만 정의된 Service 클래스
+	 * 
+	 * 1. 상속기술 사용 안했을 경우
+	 * Manager			Engineer			Secretary
+	 * step 1. 가장 저차원적인 기능 정의
+	 * >> 추가에 관련된 기능을 정의
+	 * public void addManager(Manager m) { }
+	 * public void insertEngin(Engineer eg) { }
+	 * public void plusSecrataryMember(secratary s){}
+	 * 
+	 * step 2.
+	 * public void addManager(Manager m){}
+	 * public void addEngineer(Engineer eg){}
+	 * public void addSecratary(secratary s){}
+	 * 
+	 * 2. 상속기술 사용 한 경우
+	 * 					Employee(다양한 이기종의 자식 클래스들을 단일하게 관리)
+	 * Manager			Engineer			secratary
+	 * 
+	 * step 3.
+	 * public void addEmployee(Manager m) {}
+	 * public void addEmployee(Engineer m) {}
+	 * public void addEmployee(secratary m) {}
+	 */
+}

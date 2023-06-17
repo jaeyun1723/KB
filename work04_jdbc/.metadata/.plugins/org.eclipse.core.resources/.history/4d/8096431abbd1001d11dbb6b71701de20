@@ -1,0 +1,20 @@
+package com.jdbc.test;
+
+public class DBConnectTest1 {
+
+	public static void main(String[] args) {
+		try {
+			// 1.
+			Class.forName("oracle.jdbc.driver.OracleDriver");// FQCN
+			System.out.println("1. Driver Loading...Success...");
+		} catch (ClassNotFoundException e) {
+			System.out.println("1. Driver Loading...Fail...");
+		}
+		
+		
+		
+		
+		
+		
+	}//
+}//
